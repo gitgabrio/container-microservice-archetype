@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<!--<groupId>net.cardosi.microservices</groupId>-->
+	<artifactId>persistenceservice</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>net.cardosi.microservices</groupId>
+		<artifactId>serviceparent</artifactId>
+		<version>0.1-SNAPSHOT</version>
+		<relativePath></relativePath>
+	</parent>
+
+	<properties>
+		<!-- Stand-alone RESTFul application for testing only -->
+		<start-class>net.cardosi.microservices.persistenceservice.PersistenceServer</start-class>
+		<hsqldb.version>2.4.0</hsqldb.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>${hsqldb.version}</version>
+		</dependency>
+	</dependencies>
+	<profiles>
+		<profile>
+			<id>localhost</id>
+			<properties>
+				<eureka.port>2222</eureka.port>
+				<eureka.hostname>localhost</eureka.hostname>
+				<eureka.server>localhost:1111</eureka.server>
+				<finalName>configurationservice-localhost-${version}</finalName>
+			</properties>
+		</profile>
+	</profiles>
+
+
+</project>

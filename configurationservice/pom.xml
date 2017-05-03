@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.cardosi.microservices</groupId>
+    <artifactId>configurationservice</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>net.cardosi.microservices</groupId>
+        <artifactId>serviceparent</artifactId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <!-- Stand-alone RESTFul application for testing only -->
+        <start-class>net.cardosi.microservices.configurationservice.ConfigurationServer</start-class>
+        <finalName>configurationservice-${version}</finalName>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.cardosi.microservices</groupId>
+            <artifactId>persistenceservice</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.horsa.asteriskpoc</groupId>
+            <artifactId>servicecommon</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    <profiles>
+        <profile>
+            <id>localhost</id>
+            <properties>
+                <eureka.port>4444</eureka.port>
+                <eureka.hostname>localhost</eureka.hostname>
+                <eureka.server>localhost:1111</eureka.server>
+                <finalName>configurationservice-localhost-${version}</finalName>
+            </properties>
+        </profile>
+    </profiles>
+    <build>
+        <finalName>${finalName}</finalName>
+    </build>
+
+</project>

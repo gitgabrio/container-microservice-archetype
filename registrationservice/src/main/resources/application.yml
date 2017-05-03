@@ -1,0 +1,21 @@
+# Configure this Discovery Server
+eureka:
+  instance:
+    hostname: @eureka.hostname@
+    #enableSelfPreservation: false
+
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    #register-with-eureka: false
+    #fetch-registry: false
+
+server:
+  port: @eureka.port@
+
+# Discovery Server Dashboard uses FreeMarker.  Don't want Thymeleaf templates
+spring:
+  thymeleaf:
+    enabled: false
+
+

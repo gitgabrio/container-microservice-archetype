@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.cardosi.microservices</groupId>
+    <artifactId>registrationservice</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>it.horsa.asteriskpoc</groupId>
+        <artifactId>serviceparent</artifactId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <!-- Stand-alone RESTFul application for testing only -->
+        <start-class>it.horsa.asteriskpoc.registrationservice.RegistrationServer</start-class>
+        <eureka.port>1111</eureka.port>
+        <eureka.hostname>localhost</eureka.hostname>
+        <finalName>registrationservice-${version}</finalName>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>localhost</id>
+            <properties>
+                <eureka.port>1111</eureka.port>
+                <eureka.hostname>localhost</eureka.hostname>
+                <finalName>registrationservice-sweetpenguin-${version}</finalName>
+            </properties>
+        </profile>
+    </profiles>
+    <build>
+        <finalName>${finalName}</finalName>
+    </build>
+
+
+</project>
