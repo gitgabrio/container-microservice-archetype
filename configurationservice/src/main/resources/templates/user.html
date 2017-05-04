@@ -8,26 +8,14 @@
 	<h1>User Details</h1>
 	<dl class="dl-horizontal">
 		<dt>Id</dt>
-		<dd th:text="${user.psAor.id}">number</dd>
+		<dd th:text="${user.id}">number</dd>
 	</dl>
-
-	<h2>Aor</h2>
 	<dl class="dl-horizontal">
-		<dt>Contact</dt>
-		<dd th:text="${user.psAor.contact}">number</dd>
-		<dt>Max Contacts</dt>
-		<dd th:text="${user.psAor.maxContacts}">number</dd>
+		<dt>Name</dt>
+		<dd th:text="${user.name}">number</dd>
+		<dt>Surname</dt>
+		<dd th:text="${user.surname}">number</dd>
 	</dl>
-	<h2>Endpoint</h2>
-		<dl class="dl-horizontal">
-			<dt>Account Code</dt>
-			<dd th:text="${user.psEndpoint.accountcode}">number</dd>
-			<dt>Context</dt>
-			<dd th:text="${user.psEndpoint.context}">number</dd>
-			<dt>Allow</dt>
-			<dd th:text="${user.psEndpoint.allow}">number</dd>
-		</dl>
-
 	<div style="height: 2cm">&nbsp;</div>
 
 	<div style="text-align: right">

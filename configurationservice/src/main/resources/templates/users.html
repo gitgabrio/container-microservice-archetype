@@ -28,10 +28,10 @@
 			<tbody>
 				<tr th:each="user : ${users}">
 					<td><a href="user.html"
-						th:href="@{|/users/${user.psAor.id}|}"
-						th:text="|${user.psAor.id}|">?</a></td>
-					<td th:text="${user.psAor.contact}">?</td>
-					<td th:text="${user.psEndpoint.context}">?</td>
+						th:href="@{|/users/${user.id}|}"
+						th:text="|${user.id}|">?</a></td>
+					<td th:text="${user.name}">?</td>
+					<td th:text="${user.surname}">?</td>
 				</tr>
 			</tbody>
 		</table>

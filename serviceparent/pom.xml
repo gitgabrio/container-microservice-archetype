@@ -96,6 +96,7 @@
                 <includes>
                     <include>**/*.yml</include>
                     <include>**/*.sql</include>
+                    <include>**/*.html</include>
                 </includes>
             </resource>
         </resources>

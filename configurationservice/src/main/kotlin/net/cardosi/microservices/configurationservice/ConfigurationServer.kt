@@ -30,8 +30,6 @@ open class ConfigurationServer {
          * *            Program arguments - ignored.
          */
         @JvmStatic fun main(args: Array<String>) {
-            // Tell server to look for web-server.properties or web-server.yml
-            //System.setProperty("spring.config.name", "configuration-server")
             SpringApplication.run(ConfigurationServer::class.java, *args)
         }
     }

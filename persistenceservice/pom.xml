@@ -32,7 +32,7 @@
 				<eureka.port>2222</eureka.port>
 				<eureka.hostname>localhost</eureka.hostname>
 				<eureka.server>localhost:1111</eureka.server>
-				<finalName>configurationservice-localhost-${version}</finalName>
+				<finalName>persistenceservice-localhost-${version}</finalName>
 			</properties>
 		</profile>
 	</profiles>

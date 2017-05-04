@@ -11,7 +11,7 @@ spring:
        cache: false
   # Trailing / mandatory
   # Template location for this application only
-       prefix: classpath:/persistence-server/templates/
+       prefix: classpath:/templates/
 
   # Database configuration
   # Spring Boot automatically creates a JPA EntityManagerFactory using Hibernate
