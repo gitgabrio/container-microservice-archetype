@@ -4,8 +4,6 @@ package net.cardosi.microservices.configurationservice.controllers
 
 import net.cardosi.microservices.configurationservice.criterias.SearchCriteria
 import net.cardosi.microservices.configurationservice.services.UsersService
-import net.cardosi.microservices.persistenceservice.dtos.User
-import net.cardosi.microservices.persistenceservice.entities.CompanyEntity
 import net.cardosi.microservices.persistenceservice.entities.UserEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -35,7 +33,7 @@ class UsersController(
 
     @InitBinder
     fun initBinder(binder: WebDataBinder) {
-        binder.setAllowedFields("userNumber", "searchText")
+        binder.setAllowedFields("userNumber", "surname")
     }
 
     @RequestMapping("/users")
@@ -50,7 +48,7 @@ class UsersController(
 
     @RequestMapping("/users/{userNumber}")
     fun byNumber(model: Model,
-                 @PathVariable("userNumber") userNumber: String): String {
+                 @PathVariable("userNumber") userNumber: Integer): String {
         logger.info("web-service byNumber() invoked: " + userNumber)
         try {
             val user = usersService.findByNumber(userNumber)
@@ -65,12 +63,12 @@ class UsersController(
     }
 
     @RequestMapping("/users/realm/{realm}")
-    fun byRealm(model: Model, @PathVariable("realm") realm: String): String {
-        logger.info("web-service byRealm() invoked: " + realm)
-        val users = usersService.findByRealm(realm)
+    fun byNameAndSurname(model: Model, @PathVariable("surname") surname: String, @PathVariable("name") name: String): String {
+        logger.info("web-service findByNameAndSurname() invoked: $surname $name")
+        val users = usersService.findByNameAndSurname(surname, name)
         logger.info("web-service byRealm() found: " + users!!)
-        model.addAttribute("search", realm)
-        if (users != null)
+        model.addAttribute("search", surname)
+       // if (users != null)
             model.addAttribute("users", users)
         return "users"
     }
@@ -89,34 +87,31 @@ class UsersController(
         if (result.hasErrors())
             return "userSearch"
         val userNumber = criteria.userNumber
-        if (userNumber != null && StringUtils.hasText(userNumber)) {
+        if (userNumber != null) {
             return byNumber(model, userNumber)
         } else {
-            val searchText = criteria.searchText
-            return byRealm(model, searchText!!)
+            val surname = criteria.surname
+            val name = criteria.name
+            return byNameAndSurname(model, surname!!, name!!)
         }
     }
 
     @RequestMapping(value = "/users/add", method = arrayOf(RequestMethod.GET))
     fun addUser(model: Model) : String {
-        val person = UserEntity()
-        person.id = "123456"
-        val company = CompanyEntity()
-        val user = User()
-        user.person = person
-        user.company = company
+        val user = UserEntity()
+        user.id = Integer(1234)
+        user.name = "Pippo"
+        user.surname = "Franco"
         model.addAttribute("newUser", user)
         return "userAdd"
     }
 
     @RequestMapping(value = "/users/doadd")
-    fun doAdd(model: Model, user: UserEntity,
+    fun doAdd(model: Model, toAdd: UserEntity,
               result: BindingResult): String? {
-        logger.info("web-service doAdd() invoked $user")
+        logger.info("web-service doAdd() invoked $toAdd")
         try {
-            val newUser = User()
-            newUser.person = user
-            val userSaved = usersService.saveUser(newUser)
+            val userSaved = usersService.saveUser(toAdd)
             model.addAttribute("user", userSaved)
             return "user"
         } catch (e: Exception) {

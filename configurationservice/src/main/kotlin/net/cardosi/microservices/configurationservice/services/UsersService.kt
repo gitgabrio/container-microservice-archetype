@@ -52,7 +52,7 @@ class UsersService(serviceUrl: String) {
         logger.info("findAll() invoked")
         var users: Array<UserEntity>? = null
         try {
-            users = restTemplate!!.getForObject(serviceUrl + "/users/", Array<UserEntity>::class.java)
+            users = restTemplate!!.getForObject(serviceUrl + "/persons/", Array<UserEntity>::class.java)
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
             return null
@@ -64,21 +64,21 @@ class UsersService(serviceUrl: String) {
     }
 
     @Throws(Exception::class)
-    fun findByNumber(userNumber: String): UserEntity? {
+    fun findByNumber(userNumber: Integer): UserEntity? {
         logger.info("findByNumber() invoked: for $userNumber")
         try {
-            return restTemplate!!.getForObject(serviceUrl + "/users/{number}", UserEntity::class.java, userNumber)
+            return restTemplate!!.getForObject(serviceUrl + "/persons/{id}", UserEntity::class.java, userNumber)
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
             return null
         }
     }
 
-    fun findByRealm(realm: String): List<UserEntity>? {
-        logger.info("findByRealm() invoked:  for " + realm)
+    fun findByNameAndSurname(surname: String, name: String): List<UserEntity>? {
+        logger.info("findByNameAndSurname() invoked:  for {surname} {name}")
         var users: Array<UserEntity>? = null
         try {
-            users = restTemplate!!.getForObject(serviceUrl + "/users/realm/{name}", Array<UserEntity>::class.java, realm)
+            users = restTemplate!!.getForObject(serviceUrl + "/persons/{surname}/{name}", Array<UserEntity>::class.java, surname, name)
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
         }

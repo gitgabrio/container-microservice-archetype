@@ -41,7 +41,7 @@
 				Search</label>
 			<div class="col-xs-2">
 				<input type="text" class="form-control" id="search"
-					th:field="*{searchText}" placeholder="Realm name"
+					th:field="*{surname}" placeholder="Realm name"
 					style="width: 10em;" />
 			</div>
 			<div class="col-xs-8">Case-insensitive, supports part name
@@ -53,8 +53,8 @@
 			<div class="control-label col-xs-2">&nbsp;</div>
 			<div class="col-xs-2">&nbsp;</div>
 			<div class="col-xs-8">
-				<span th:if="${#fields.hasErrors('searchText')}"
-					style="color: red; font-size: smaller" th:errors="*{searchText}"></span>
+				<span th:if="${#fields.hasErrors('surname')}"
+					style="color: red; font-size: smaller" th:errors="*{surname}"></span>
 			</div>
 		</div>
 
