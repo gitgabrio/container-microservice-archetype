@@ -16,15 +16,15 @@
 	<properties>
 		<!-- Stand-alone RESTFul application for testing only -->
 		<start-class>net.cardosi.microservices.persistenceservice.PersistenceServer</start-class>
-		<hsqldb.version>2.4.0</hsqldb.version>
+		<!--<hsqldb.version>2.4.0</hsqldb.version>-->
 	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>${hsqldb.version}</version>
-		</dependency>
-	</dependencies>
+	<!--<dependencies>-->
+		<!--<dependency>-->
+			<!--<groupId>org.hsqldb</groupId>-->
+			<!--<artifactId>hsqldb</artifactId>-->
+			<!--&lt;!&ndash;<version>${hsqldb.version}</version>&ndash;&gt;-->
+		<!--</dependency>-->
+	<!--</dependencies>-->
 	<profiles>
 		<profile>
 			<id>localhost</id>

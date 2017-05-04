@@ -1,9 +1,7 @@
 package net.cardosi.microservices.persistenceservice.controllers
 
 
-
 import net.cardosi.microservices.persistenceservice.entities.UserEntity
-import net.cardosi.microservices.persistenceservice.exceptions.EntityNotFoundException
 import net.cardosi.microservices.persistenceservice.repositories.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -22,21 +20,39 @@ class UserController
  * @param userRepository An PsAors repository implementation.
  */
 @Autowired
-constructor(userRepository: UserRepository) : AbstractEntityController<UserEntity, String, UserRepository>(userRepository) {
+constructor(userRepository: UserRepository) : AbstractEntityController<UserEntity, Integer, UserRepository>(userRepository) {
 
     /**
      * Fetch a UserEntity with the specified UserEntity id.
 
-     * @param id A String, PsAor id.
+     * @param id A Integer
      * *
      * @return The user if found.
      * *
      * @throws EntityNotFoundException If the number is not recognised.
      */
     @RequestMapping("/persons/{id}")
-    override fun byId(@PathVariable("id") id: String): UserEntity {
+    override fun byId(@PathVariable("id") id: Integer): UserEntity {
         logger.info("persistence-service byId() invoked: " + id)
         return super.byId(id)
+    }
+
+    /**
+     * Fetch a `List&lt;UserEntity&gt;` with the specified surname and name
+     * @param surname A String
+     *
+     *  @param name A String
+     *
+     * @return The list users found.
+     *
+     *
+     */
+    @RequestMapping("/persons/{surname}/{name}")
+    fun findByNameAndSurname(@PathVariable("surname") surname: String, @PathVariable("name") name: String): List<UserEntity> {
+        logger.info("persistence-service findByNameAndSurname() invoked: {surname} {name}")
+        val toReturn = repository.findByNameAndSurname(name, surname)
+        logger.info("persistence-service findByNameAndSurname() found: " + toReturn)
+        return toReturn
     }
 
     /**

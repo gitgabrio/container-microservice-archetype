@@ -21,14 +21,14 @@ spring:
   #      schema.sql. Instead check the tables match their JPA mapped classes
   jpa:
     hibernate:
-      ddl-auto: verify
+      ddl-auto: none
       naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
     database: HSQL
     show-sql: true
 
-  datasource:
-    data: data.sql
-    schema: schema.sql
+ # datasource:
+  #  data: data.sql
+   # schema: schema.sql
 
 # Hibernate Properties
 #hibernate:
