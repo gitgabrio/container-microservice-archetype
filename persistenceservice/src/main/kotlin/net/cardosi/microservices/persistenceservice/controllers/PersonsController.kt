@@ -2,7 +2,7 @@ package net.cardosi.microservices.persistenceservice.controllers
 
 
 import net.cardosi.microservices.persistenceservice.entities.UserEntity
-import net.cardosi.microservices.persistenceservice.repositories.UserRepository
+import net.cardosi.microservices.persistenceservice.repositories.PersonRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.*
  *
  */
 @RestController
-class UserController
+class PersonsController
 
 
 /**
  * Create an instance plugging in the respository of Users.
 
- * @param userRepository An PsAors repository implementation.
+ * @param personRepository An PsAors repository implementation.
  */
 @Autowired
-constructor(userRepository: UserRepository) : AbstractEntityController<UserEntity, Integer, UserRepository>(userRepository) {
+constructor(personRepository: PersonRepository) : AbstractEntityController<UserEntity, Integer, PersonRepository>(personRepository) {
 
     /**
      * Fetch a UserEntity with the specified UserEntity id.
@@ -38,7 +38,7 @@ constructor(userRepository: UserRepository) : AbstractEntityController<UserEntit
     }
 
     /**
-     * Fetch a `List&lt;UserEntity&gt;` with the specified surname and name
+     * Fetch a <code>UserEntity</code> with the specified surname and name
      * @param surname A String
      *
      *  @param name A String
@@ -48,15 +48,33 @@ constructor(userRepository: UserRepository) : AbstractEntityController<UserEntit
      *
      */
     @RequestMapping("/persons/{surname}/{name}")
-    fun findByNameAndSurname(@PathVariable("surname") surname: String, @PathVariable("name") name: String): List<UserEntity> {
-        logger.info("persistence-service findByNameAndSurname() invoked: {surname} {name}")
-        val toReturn = repository.findByNameAndSurname(name, surname)
-        logger.info("persistence-service findByNameAndSurname() found: " + toReturn)
+    fun findBySurnameAndName(@PathVariable("surname") surname: String, @PathVariable("name") name: String): UserEntity {
+        logger.info("persistence-service findBySurnameAndName() invoked: {surname} {name}")
+        val toReturn = repository.findBySurnameAndName(surname, name)
+        logger.info("persistence-service findBySurnameAndName() found: " + toReturn)
         return toReturn
     }
 
     /**
-     * Fetch all `List&lt;UserEntity&gt;` entities
+     * Fetch a <code>List&lt;UserEntity&gt;</code> with the specified surname and name
+     * @param surname A String
+     *
+     *  @param name A String
+     *
+     * @return The list users found.
+     *
+     *
+     */
+    @RequestMapping("/persons/surname/{surname}")
+    fun findBySurname(@PathVariable("surname") surname: String): List<UserEntity> {
+        logger.info("persistence-service findBySurname() invoked: $surname ")
+        val toReturn = repository.findBySurname(surname)
+        logger.info("persistence-service findBySurnameAndName() found: " + toReturn)
+        return toReturn
+    }
+
+    /**
+     * Fetch all <code>List&lt;UserEntity&gt;</code> entities
 
      * @return All the  `UserEntity` found.
      */

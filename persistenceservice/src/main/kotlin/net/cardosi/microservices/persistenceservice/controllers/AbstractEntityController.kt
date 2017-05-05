@@ -16,9 +16,9 @@ import java.util.logging.Logger
  */
 abstract class AbstractEntityController<T : InterfaceEntity, ID : Serializable, E : CrudRepository<T, ID>>
 /**
- * Create an instance plugging in the respository of Users.
+ * Create an instance plugging in the repository of Users.
 
- * @param repository An `CrudRepository, ID>`  implementation
+ * @param repository A `CrudRepository, ID>`  implementation
  */
 (protected var repository: E) {
 

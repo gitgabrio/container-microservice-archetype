@@ -41,8 +41,7 @@ class UsersController(
         logger.info("web-service allUsers() invoked")
         val users = usersService.findAll()
         logger.info("web-service allUsers() found: " + users!!)
-        if (users != null)
-            model.addAttribute("users", users)
+        model.addAttribute("users", users)
         return "users"
     }
 
@@ -63,13 +62,22 @@ class UsersController(
     }
 
     @RequestMapping("/users/{surname}/{name}")
-    fun byNameAndSurname(model: Model, @PathVariable("surname") surname: String, @PathVariable("name") name: String): String {
-        logger.info("web-service findByNameAndSurname() invoked: $surname $name")
-        val users = usersService.findByNameAndSurname(surname, name)
+    fun findBySurnameAndName(model: Model, @PathVariable("surname") surname: String, @PathVariable("name") name: String): String {
+        logger.info("web-service findBySurnameAndName() invoked: $surname $name")
+        val user = usersService.findBySurnameAndName(surname, name)
+        logger.info("web-service byRealm() found: " + user!!)
+        model.addAttribute("search", surname)
+        model.addAttribute("user", user)
+        return "user"
+    }
+
+    @RequestMapping("/users/surname/{surname}")
+    fun findBySurname(model: Model, @PathVariable("surname") surname: String): String {
+        logger.info("web-service findBySurnameAndName() invoked: $surname")
+        val users = usersService.findBySurname(surname)
         logger.info("web-service byRealm() found: " + users!!)
         model.addAttribute("search", surname)
-       // if (users != null)
-            model.addAttribute("users", users)
+        model.addAttribute("users", users)
         return "users"
     }
 
@@ -92,16 +100,13 @@ class UsersController(
         } else {
             val surname = criteria.surname
             val name = criteria.name
-            return byNameAndSurname(model, surname!!, name!!)
+            if (StringUtils.isEmpty(name)) return findBySurname(model, surname!!) else return findBySurnameAndName(model, surname!!, name!!)
         }
     }
 
     @RequestMapping(value = "/users/add", method = arrayOf(RequestMethod.GET))
-    fun addUser(model: Model) : String {
+    fun addUser(model: Model): String {
         val user = UserEntity()
-        user.id = Integer(1234)
-        user.name = "Pippo"
-        user.surname = "Franco"
         model.addAttribute("newUser", user)
         return "userAdd"
     }

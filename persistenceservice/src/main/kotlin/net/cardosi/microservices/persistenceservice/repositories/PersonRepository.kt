@@ -1,4 +1,4 @@
-@file:JvmName("UserRepository")
+@file:JvmName("PersonRepository")
 package net.cardosi.microservices.persistenceservice.repositories
 
 import net.cardosi.microservices.persistenceservice.entities.UserEntity
@@ -9,8 +9,9 @@ import org.springframework.data.repository.CrudRepository
 
  * @author Paul Chapman
  */
-interface UserRepository : CrudRepository<UserEntity, Integer> {
+interface PersonRepository : CrudRepository<UserEntity, Integer> {
 
-    fun findByNameAndSurname(name : String, surname: String) : List<UserEntity>
+    fun findBySurnameAndName(surname : String, name: String) : UserEntity
 
+    fun findBySurname(surname : String) : List<UserEntity>
 }

@@ -13,6 +13,7 @@ class UserEntity : InterfaceEntity {
 
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Basic
     @Column(name = "id")
     var id: Integer? = null

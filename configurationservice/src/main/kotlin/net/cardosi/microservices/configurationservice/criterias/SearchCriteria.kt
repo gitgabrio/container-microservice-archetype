@@ -1,6 +1,8 @@
 @file:JvmName("SearchCriteria")
 package net.cardosi.microservices.configurationservice.criterias
 
+
+import org.springframework.util.StringUtils
 import org.springframework.validation.Errors
 
 class SearchCriteria {
@@ -10,44 +12,26 @@ class SearchCriteria {
 
     var name: String? = null
 
-    val isValid: Boolean
-        get() {
-            // TODO IMPLEMENTATION
-            return true
-//            if (StringUtils.hasText(userNumber))
-//                return !StringUtils.hasText(surname)
-//            else
-//                return StringUtils.hasText(surname)
-        }
-
     fun validate(errors: Errors): Boolean {
-        // TODO IMPLEMENTATION
-//        if (userNumber) {
-//            if (userNumber!!.length < 1)
-//                errors.rejectValue("userNumber", "badFormat",
-//                        "User number should be at least 1 digit")
-//            else {
-//                try {
-//                    Integer.parseInt(userNumber!!)
-//                } catch (e: NumberFormatException) {
-//                    errors.rejectValue("userNumber", "badFormat",
-//                            "User number should be only digits")
-//                }
-//
+        if (userNumber != null) {
+            if (StringUtils.hasText(surname)) {
+                errors.rejectValue("surname", "nonEmpty",
+                        "Cannot specify user number and surname")
+            }
+            if (StringUtils.hasText(name)) {
+                errors.rejectValue("name", "nonEmpty",
+                        "Cannot specify user number and name")
+            }
+        } else {
+            if (!StringUtils.hasText(surname)) {
+                errors.rejectValue("surname", "empty",
+                        "Cannot leave blank user number and surname")
+            }
+//            if (!StringUtils.hasText(name)) {
+//                errors.rejectValue("name", "empty",
+//                        "Cannot leave blank user number and name")
 //            }
-//
-//            if (StringUtils.hasText(surname)) {
-//                errors.rejectValue("surname", "nonEmpty",
-//                        "Cannot specify user number and search text")
-//            }
-//        } else if (StringUtils.hasText(surname)) {
-//        }// Nothing to do
-//        else {
-//            errors.rejectValue("userNumber", "nonEmpty",
-//                    "Must specify either an user number or search text")
-//
-//        }
-
+        }
         return errors.hasErrors()
     }
 

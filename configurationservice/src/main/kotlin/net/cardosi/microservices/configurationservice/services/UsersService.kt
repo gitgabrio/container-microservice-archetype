@@ -74,16 +74,27 @@ class UsersService(serviceUrl: String) {
         }
     }
 
-    fun findByNameAndSurname(surname: String, name: String): List<UserEntity>? {
-        logger.info("findByNameAndSurname() invoked:  for {surname} {name}")
+    fun findBySurnameAndName(surname: String, name: String): UserEntity? {
+        logger.info("findBySurnameAndName() invoked:  for $surname $name")
+        var user: UserEntity? = null
+        try {
+            user = restTemplate!!.getForObject(serviceUrl + "/persons/{surname}/{name}", UserEntity::class.java, surname, name)
+        } catch (e: HttpClientErrorException) { // 404
+            // Nothing found
+        }
+        return user
+    }
+
+    fun findBySurname(surname: String): List<UserEntity>? {
+        logger.info("findBySurname() invoked:  for $surname ")
         var users: Array<UserEntity>? = null
         try {
-            users = restTemplate!!.getForObject(serviceUrl + "/persons/{surname}/{name}", Array<UserEntity>::class.java, surname, name)
+            users = restTemplate!!.getForObject(serviceUrl + "/persons/surname/{surname}", Array<UserEntity>::class.java, surname)
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
         }
         if (users == null || users.size == 0)
-            return ArrayList()
+            return null
         else
             return Arrays.asList(*users)
     }
@@ -92,7 +103,7 @@ class UsersService(serviceUrl: String) {
     fun saveUser(newUser: UserEntity) : UserEntity {
         logger.info("saveUser() invoked: for " + newUser)
         try {
-            return restTemplate!!.getForObject(serviceUrl + "/users/add/", UserEntity::class.java, newUser) ?: throw Exception("Failed to save user")
+            return restTemplate!!.postForObject(serviceUrl + "/persons/save", newUser, UserEntity::class.java) ?: throw Exception("Failed to save user")
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
             throw e
