@@ -33,7 +33,7 @@ class UsersController(
 
     @InitBinder
     fun initBinder(binder: WebDataBinder) {
-        binder.setAllowedFields("userNumber", "surname")
+        binder.setAllowedFields("userNumber", "surname", "name")
     }
 
     @RequestMapping("/users")
@@ -62,7 +62,7 @@ class UsersController(
         }
     }
 
-    @RequestMapping("/users/realm/{realm}")
+    @RequestMapping("/users/{surname}/{name}")
     fun byNameAndSurname(model: Model, @PathVariable("surname") surname: String, @PathVariable("name") name: String): String {
         logger.info("web-service findByNameAndSurname() invoked: $surname $name")
         val users = usersService.findByNameAndSurname(surname, name)

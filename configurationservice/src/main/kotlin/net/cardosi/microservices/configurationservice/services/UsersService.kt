@@ -83,7 +83,7 @@ class UsersService(serviceUrl: String) {
             // Nothing found
         }
         if (users == null || users.size == 0)
-            return null
+            return ArrayList()
         else
             return Arrays.asList(*users)
     }
