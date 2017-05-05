@@ -75,7 +75,7 @@ constructor(personRepository: PersonRepository) : AbstractEntityController<UserE
 
     /**
      * Fetch all <code>List&lt;UserEntity&gt;</code> entities
-
+     *
      * @return All the  `UserEntity` found.
      */
     @RequestMapping("/persons")
@@ -86,7 +86,7 @@ constructor(personRepository: PersonRepository) : AbstractEntityController<UserE
 
     /**
      * Save a `UserEntity` entity
-
+     *
      * @param toSave `UserEntity` entity  to save
      * *
      * @return The saved `UserEntity;` entity
