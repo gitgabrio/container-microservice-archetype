@@ -4,7 +4,10 @@
     <!--<groupId>net.cardosi.microservices</groupId>-->
     <artifactId>container-microservice</artifactId>
     <version>0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>actorclientservice</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <parent>
         <artifactId>serviceparent</artifactId>
@@ -27,6 +30,11 @@
         <dependency>
             <groupId>net.cardosi.microservices</groupId>
             <artifactId>configurationservice</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.cardosi.microservices</groupId>
+            <artifactId>actorclientservice</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

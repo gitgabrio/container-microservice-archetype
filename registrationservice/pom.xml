@@ -7,14 +7,14 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>it.horsa.asteriskpoc</groupId>
+        <groupId>net.cardosi.microservices</groupId>
         <artifactId>serviceparent</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
 
     <properties>
         <!-- Stand-alone RESTFul application for testing only -->
-        <start-class>it.horsa.asteriskpoc.registrationservice.RegistrationServer</start-class>
+        <start-class>net.cardosi.microservices.registrationservice.RegistrationServer</start-class>
         <eureka.port>1111</eureka.port>
         <eureka.hostname>localhost</eureka.hostname>
         <finalName>registrationservice-${version}</finalName>

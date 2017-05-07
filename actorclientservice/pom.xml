@@ -1,8 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.cardosi.microservices</groupId>
-    <artifactId>configurationservice</artifactId>
+    <artifactId>actorclientservice</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -12,37 +15,46 @@
         <version>0.1-SNAPSHOT</version>
     </parent>
 
+
     <properties>
         <!-- Stand-alone RESTFul application for testing only -->
-        <start-class>net.cardosi.microservices.configurationservice.ConfigurationServer</start-class>
-        <finalName>configurationservice-${version}</finalName>
+        <start-class>net.cardosi.microservices.actorclientservice.ActorClientServer</start-class>
+        <finalName>actorclientservice-${version}</finalName>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>net.cardosi.microservices</groupId>
-            <artifactId>persistenceservice</artifactId>
+            <artifactId>servicecommon</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>net.cardosi.microservices</groupId>
-            <artifactId>servicecommon</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-actor_2.11</artifactId>
+            <version>2.4.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-remote_2.11</artifactId>
+            <version>2.4.2</version>
         </dependency>
     </dependencies>
     <profiles>
         <profile>
             <id>localhost</id>
             <properties>
-                <eureka.port>4444</eureka.port>
+                <eureka.port>5555</eureka.port>
                 <eureka.hostname>localhost</eureka.hostname>
                 <eureka.server>localhost:1111</eureka.server>
-                <finalName>configurationservice-localhost-${version}</finalName>
+                <finalName>actorclientservice-localhost-${version}</finalName>
             </properties>
         </profile>
     </profiles>
     <build>
         <finalName>${finalName}</finalName>
     </build>
+
+
 
 </project>
