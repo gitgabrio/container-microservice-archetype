@@ -29,3 +29,6 @@ eureka:
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
     virtual-host-name: akka.server.actor
+  # what is my application virtual ip address? (clients can query on this vipAddress)
+  vipAddress: akka.idtrust.com.br
+  name: akka
