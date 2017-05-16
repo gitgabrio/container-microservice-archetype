@@ -5,9 +5,9 @@ spring:
   freemarker:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
   thymeleaf:
-    enabled: false
-    #cache: false             # Allow Thymeleaf templates to be reloaded at runtime
-    #prefix: classpath:/templates/    # Trailing / mandatory
+    enabled: true
+    cache: false             # Allow Thymeleaf templates to be reloaded at runtime
+    prefix: classpath:/templates/    # Trailing / mandatory
                              # Template location for this application only
 
 # Map the error path to error template (for Thymeleaf)
@@ -29,5 +29,7 @@ eureka:
 
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
 
-
+management:
+    security:
+      enabled: false
 

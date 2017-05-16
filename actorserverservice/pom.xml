@@ -42,11 +42,26 @@
     </dependencies>
     <profiles>
         <profile>
-            <id>localhost</id>
+            <id>localhost-a</id>
             <properties>
                 <eureka.port>6666</eureka.port>
                 <eureka.hostname>localhost</eureka.hostname>
                 <eureka.server>localhost:1111</eureka.server>
+                <akka.port>2552</akka.port>
+                <virtual-hostname>akka.server.actor</virtual-hostname>
+                <application.name>actorserver-service-A</application.name>
+                <finalName>actorserverservice-localhost-${version}</finalName>
+            </properties>
+        </profile>
+        <profile>
+            <id>localhost-b</id>
+            <properties>
+                <eureka.port>6667</eureka.port>
+                <eureka.hostname>localhost</eureka.hostname>
+                <eureka.server>localhost:1111</eureka.server>
+                <akka.port>2553</akka.port>
+                <virtual-hostname>akka.server.actor</virtual-hostname>
+                <application.name>actorserver-service-B</application.name>
                 <finalName>actorserverservice-localhost-${version}</finalName>
             </properties>
         </profile>

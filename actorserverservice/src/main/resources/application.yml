@@ -1,13 +1,13 @@
 # Spring properties
 spring:
   application:
-     name: actorserver-service  # Service registers under this name
+     name: @application.name@  # Service registers under this name
   freemarker:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
   thymeleaf:
-    enabled: false
-    #cache: false             # Allow Thymeleaf templates to be reloaded at runtime
-    #prefix: classpath:/templates/    # Trailing / mandatory
+    enabled: true
+    cache: false             # Allow Thymeleaf templates to be reloaded at runtime
+    prefix: classpath:/templates/    # Trailing / mandatory
                              # Template location for this application only
 
 # Map the error path to error template (for Thymeleaf)
@@ -28,7 +28,12 @@ eureka:
       defaultZone: http://@eureka.server@/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
-    virtual-host-name: akka.server.actor
+    virtual-host-name: @virtual-hostname@
+    metadata-map:
+      port: @akka.port@
   # what is my application virtual ip address? (clients can query on this vipAddress)
-  vipAddress: akka.idtrust.com.br
-  name: akka
+ # vipAddress: akka.idtrust.com.br
+ # name: akka
+management:
+    security:
+      enabled: false

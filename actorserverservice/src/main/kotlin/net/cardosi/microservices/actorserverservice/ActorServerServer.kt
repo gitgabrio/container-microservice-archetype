@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Import
 /**
  * Users web-server. Works as a microservice client, fetching data from the
  * User-Service. Uses the Discovery Server (Eureka) to find the microservice.
-
  * @author Paul Chapman
  */
 @SpringBootApplication
