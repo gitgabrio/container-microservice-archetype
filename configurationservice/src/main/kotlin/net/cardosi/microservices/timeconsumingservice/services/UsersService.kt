@@ -1,5 +1,5 @@
 @file:JvmName("UsersService")
-package net.cardosi.microservices.configurationservice.services
+package net.cardosi.microservices.timeconsumingservice.services
 
 import net.cardosi.microservices.persistenceservice.entities.UserEntity
 import org.springframework.beans.factory.annotation.Autowired

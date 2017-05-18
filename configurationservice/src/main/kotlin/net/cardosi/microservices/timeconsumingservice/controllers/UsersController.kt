@@ -1,9 +1,9 @@
 @file:JvmName("UsersController")
 
-package net.cardosi.microservices.configurationservice.controllers
+package net.cardosi.microservices.timeconsumingservice.controllers
 
-import net.cardosi.microservices.configurationservice.criterias.SearchCriteria
-import net.cardosi.microservices.configurationservice.services.UsersService
+import net.cardosi.microservices.timeconsumingservice.criterias.SearchCriteria
+import net.cardosi.microservices.timeconsumingservice.services.UsersService
 import net.cardosi.microservices.persistenceservice.entities.UserEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller

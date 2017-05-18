@@ -1,11 +1,11 @@
 @file:JvmName("ConfigurationConfiguration")
 
-package net.cardosi.microservices.configurationservice.configurations
+package net.cardosi.microservices.timeconsumingservice.configurations
 
 import net.cardosi.microservices.Services
-import net.cardosi.microservices.configurationservice.controllers.HomeController
-import net.cardosi.microservices.configurationservice.controllers.UsersController
-import net.cardosi.microservices.configurationservice.services.UsersService
+import net.cardosi.microservices.timeconsumingservice.controllers.HomeController
+import net.cardosi.microservices.timeconsumingservice.controllers.UsersController
+import net.cardosi.microservices.timeconsumingservice.services.UsersService
 import org.springframework.cloud.client.loadbalancer.LoadBalanced
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate
  * Created by Gabriele Cardosi - gcardosi@cardosi.net on 04/11/2016.
  */
 @Configuration
-@ComponentScan("net.cardosi.microservices.configurationservice")
+@ComponentScan("net.cardosi.microservices.timeconsumingservice")
 //@PropertySource("configuration-server.properties")
 open class ConfigurationConfiguration {
 
