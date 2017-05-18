@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.cardosi.microservices</groupId>
-    <artifactId>configurationservice</artifactId>
+    <artifactId>timeconsumingservice</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -10,12 +10,13 @@
         <groupId>net.cardosi.microservices</groupId>
         <artifactId>serviceparent</artifactId>
         <version>0.1-SNAPSHOT</version>
+        <relativePath>../serviceparent</relativePath>
     </parent>
 
     <properties>
         <!-- Stand-alone RESTFul application for testing only -->
-        <start-class>net.cardosi.microservices.timeconsumingservice.ConfigurationServer</start-class>
-        <finalName>configurationservice-${version}</finalName>
+        <start-class>net.cardosi.microservices.timeconsumingservice.TimeConsumingServer</start-class>
+        <finalName>timeconsumingservice-${version}</finalName>
     </properties>
 
     <dependencies>
@@ -34,10 +35,10 @@
         <profile>
             <id>localhost</id>
             <properties>
-                <eureka.port>4444</eureka.port>
+                <eureka.port>3333</eureka.port>
                 <eureka.hostname>localhost</eureka.hostname>
                 <eureka.server>localhost:1111</eureka.server>
-                <finalName>configurationservice-localhost-${version}</finalName>
+                <finalName>timeconsumingservice-localhost-${version}</finalName>
             </properties>
         </profile>
     </profiles>
