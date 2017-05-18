@@ -1,12 +1,14 @@
 @file:JvmName("UsersService")
+
 package net.cardosi.microservices.timeconsumingservice.services
 
 import net.cardosi.microservices.persistenceservice.entities.UserEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cloud.client.loadbalancer.LoadBalanced
+import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
-import org.springframework.web.client.HttpClientErrorException
-import org.springframework.web.client.RestTemplate
+import org.springframework.util.concurrent.ListenableFuture
+import org.springframework.web.client.*
 import java.lang.Exception
 import java.util.*
 import java.util.logging.Logger
@@ -22,11 +24,15 @@ class UsersService(serviceUrl: String) {
 
     @Autowired
     @LoadBalanced
-    protected var restTemplate: RestTemplate? = null
+    private var restTemplate: RestTemplate? = null
 
-    protected var serviceUrl: String
+    @Autowired
+    @LoadBalanced
+    private var asyncRestTemplate: AsyncRestTemplate? = null
 
-    protected var logger = Logger.getLogger(UsersService::class.java.name)
+    private var serviceUrl: String
+
+    private var logger = Logger.getLogger(UsersService::class.java.name)
 
     init {
         this.serviceUrl = if (serviceUrl.startsWith("http"))
@@ -53,6 +59,26 @@ class UsersService(serviceUrl: String) {
         var users: Array<UserEntity>? = null
         try {
             users = restTemplate!!.getForObject(serviceUrl + "/persons/", Array<UserEntity>::class.java)
+        } catch (e: HttpClientErrorException) { // 404
+            // Nothing found
+            return null
+        }
+        if (users == null || users.size == 0)
+            return null
+        else
+            return Arrays.asList(*users)
+    }
+
+    @Throws(Exception::class)
+    fun findAsyncAll(): List<UserEntity>? {
+        logger.info("findAsyncAll() invoked")
+        var users: Array<UserEntity>? = null
+        try {
+            //TODO Check endpoint path - manage response
+            val future: ListenableFuture<String> = asyncRestTemplate!!.execute(serviceUrl + "/persons/", HttpMethod.GET, requestCallback, responseExtractor)
+            //waits for the result
+            val result = future.get()
+            println(result)
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
             return null
@@ -100,7 +126,7 @@ class UsersService(serviceUrl: String) {
     }
 
     @Throws(Exception::class)
-    fun saveUser(newUser: UserEntity) : UserEntity {
+    fun saveUser(newUser: UserEntity): UserEntity {
         logger.info("saveUser() invoked: for " + newUser)
         try {
             return restTemplate!!.postForObject(serviceUrl + "/persons/save", newUser, UserEntity::class.java) ?: throw Exception("Failed to save user")
@@ -109,6 +135,10 @@ class UsersService(serviceUrl: String) {
             throw e
         }
     }
+
+    var requestCallback: AsyncRequestCallback = AsyncRequestCallback { arg0 -> System.out.println(arg0.uri) }
+
+    var responseExtractor: ResponseExtractor<String> = ResponseExtractor { arg0 -> arg0.statusText }
 
     //	public User getByNumber(String userNumber) {
     //		User user = restTemplate.getForObject(serviceUrl
