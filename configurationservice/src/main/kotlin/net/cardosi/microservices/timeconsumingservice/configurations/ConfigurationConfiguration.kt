@@ -2,15 +2,15 @@
 
 package net.cardosi.microservices.timeconsumingservice.configurations
 
-import net.cardosi.microservices.Services
 import net.cardosi.microservices.timeconsumingservice.controllers.HomeController
 import net.cardosi.microservices.timeconsumingservice.controllers.UsersController
 import net.cardosi.microservices.timeconsumingservice.services.UsersService
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.cloud.client.loadbalancer.LoadBalanced
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.PropertySource
+import org.springframework.web.client.AsyncRestTemplate
 import org.springframework.web.client.RestTemplate
 
 /**
@@ -20,6 +20,12 @@ import org.springframework.web.client.RestTemplate
 @ComponentScan("net.cardosi.microservices.timeconsumingservice")
 //@PropertySource("configuration-server.properties")
 open class ConfigurationConfiguration {
+
+    @Value("\${persistenceservice.url}")
+    var persistenceServiceUrl :String = ""
+
+    @Value("\${timeconsumingservice.url}")
+    var timeConsumingserviceUrl :String = ""
 
     /**
      * A customized RestTemplate that has the ribbon load balancer build in.
@@ -32,13 +38,23 @@ open class ConfigurationConfiguration {
     }
 
     /**
+     * A customized RestTemplate that has the ribbon load balancer build in.
+     * @return
+     */
+    @LoadBalanced
+    @Bean
+    open fun asyncRestTemplate(): AsyncRestTemplate {
+        return AsyncRestTemplate()
+    }
+
+    /**
      * The UserService encapsulates the interaction with the micro-service.
 
      * @return A new service instance.
      */
     @Bean
     open fun usersService(): UsersService {
-        return UsersService(Services.PERSISTENCE_SERVICE_URL)
+        return UsersService(persistenceServiceUrl, timeConsumingserviceUrl)
     }
 
     /**

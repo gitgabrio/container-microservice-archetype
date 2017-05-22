@@ -27,5 +27,6 @@ eureka:
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
 
-
+persistenceservice.url: http://PERSISTENCE-SERVICE
+timeconsumingservice.url: http://TIMECONSUMING-SERVICE
 

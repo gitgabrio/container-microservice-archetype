@@ -45,6 +45,15 @@ class UsersController(
         return "users"
     }
 
+    @RequestMapping("/usersasync")
+    fun allAsyncUsers(model: Model): String {
+        logger.info("web-service allUsers() invoked")
+        val users = usersService.findAsyncAll()
+        logger.info("web-service allUsers() found: " + users!!)
+        model.addAttribute("users", users)
+        return "users"
+    }
+
     @RequestMapping("/users/{userNumber}")
     fun byNumber(model: Model,
                  @PathVariable("userNumber") userNumber: Integer): String {

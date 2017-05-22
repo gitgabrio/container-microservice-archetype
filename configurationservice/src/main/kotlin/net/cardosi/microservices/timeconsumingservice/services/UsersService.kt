@@ -20,7 +20,7 @@ import javax.annotation.PostConstruct
  * @author Paul Chapman
  */
 @Service
-class UsersService(serviceUrl: String) {
+class UsersService(persistenceServiceUrl: String,  timeConsumingserviceUrl :String) {
 
     @Autowired
     @LoadBalanced
@@ -30,15 +30,21 @@ class UsersService(serviceUrl: String) {
     @LoadBalanced
     private var asyncRestTemplate: AsyncRestTemplate? = null
 
-    private var serviceUrl: String
+    private var persistenceServiceUrl: String
+
+    private var timeConsumingserviceUrl: String
 
     private var logger = Logger.getLogger(UsersService::class.java.name)
 
     init {
-        this.serviceUrl = if (serviceUrl.startsWith("http"))
-            serviceUrl
+        this.persistenceServiceUrl = if (persistenceServiceUrl.startsWith("http"))
+            persistenceServiceUrl
         else
-            "http://" + serviceUrl
+            "http://" + persistenceServiceUrl
+        this.timeConsumingserviceUrl = if (timeConsumingserviceUrl.startsWith("http"))
+            timeConsumingserviceUrl
+        else
+            "http://" + timeConsumingserviceUrl
     }
 
     /**
@@ -58,7 +64,7 @@ class UsersService(serviceUrl: String) {
         logger.info("findAll() invoked")
         var users: Array<UserEntity>? = null
         try {
-            users = restTemplate!!.getForObject(serviceUrl + "/persons/", Array<UserEntity>::class.java)
+            users = restTemplate!!.getForObject(persistenceServiceUrl + "/persons/", Array<UserEntity>::class.java)
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
             return null
@@ -74,15 +80,39 @@ class UsersService(serviceUrl: String) {
         logger.info("findAsyncAll() invoked")
         var users: Array<UserEntity>? = null
         try {
-            //TODO Check endpoint path - manage response
-            val future: ListenableFuture<String> = asyncRestTemplate!!.execute(serviceUrl + "/persons/", HttpMethod.GET, requestCallback, responseExtractor)
-            //waits for the result
-            val result = future.get()
-            println(result)
-        } catch (e: HttpClientErrorException) { // 404
-            // Nothing found
-            return null
+            val future1 = asyncRestTemplate!!.getForEntity(timeConsumingserviceUrl + "/persons/", ListenableFuture::class.java)
+            println("persons " +future1)
+            users = future1.get().
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
+        try {
+            val future1 = asyncRestTemplate!!.getForEntity(timeConsumingserviceUrl + "/listenablepersons/", ListenableFuture::class.java)
+            println("listenablepersons " + future1)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        try {
+            val future1 = asyncRestTemplate!!.getForEntity(timeConsumingserviceUrl + "/deferredpersons/", ListenableFuture::class.java)
+            println("deferredpersons " + future1)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+//        try {
+//            //TODO Check endpoint path - manage response
+//            asyncRestTemplate!!.getForEntity(timeConsumingserviceUrl + "/persons/", HttpMethod.GET)
+//
+//            val future: ListenableFuture<String> = asyncRestTemplate!!.execute(timeConsumingserviceUrl + "/persons/", HttpMethod.GET, requestCallback, responseExtractor)
+//            //waits for the result
+//            val result = future.get()
+//            println(result)
+//        } catch (e: HttpClientErrorException) { // 404
+//            // Nothing found
+//            return null
+//        }
         if (users == null || users.size == 0)
             return null
         else
@@ -93,7 +123,7 @@ class UsersService(serviceUrl: String) {
     fun findByNumber(userNumber: Integer): UserEntity? {
         logger.info("findByNumber() invoked: for $userNumber")
         try {
-            return restTemplate!!.getForObject(serviceUrl + "/persons/{id}", UserEntity::class.java, userNumber)
+            return restTemplate!!.getForObject(persistenceServiceUrl + "/persons/{id}", UserEntity::class.java, userNumber)
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
             return null
@@ -104,7 +134,7 @@ class UsersService(serviceUrl: String) {
         logger.info("findBySurnameAndName() invoked:  for $surname $name")
         var user: UserEntity? = null
         try {
-            user = restTemplate!!.getForObject(serviceUrl + "/persons/{surname}/{name}", UserEntity::class.java, surname, name)
+            user = restTemplate!!.getForObject(persistenceServiceUrl + "/persons/{surname}/{name}", UserEntity::class.java, surname, name)
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
         }
@@ -115,7 +145,7 @@ class UsersService(serviceUrl: String) {
         logger.info("findBySurname() invoked:  for $surname ")
         var users: Array<UserEntity>? = null
         try {
-            users = restTemplate!!.getForObject(serviceUrl + "/persons/surname/{surname}", Array<UserEntity>::class.java, surname)
+            users = restTemplate!!.getForObject(persistenceServiceUrl + "/persons/surname/{surname}", Array<UserEntity>::class.java, surname)
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
         }
@@ -129,7 +159,7 @@ class UsersService(serviceUrl: String) {
     fun saveUser(newUser: UserEntity): UserEntity {
         logger.info("saveUser() invoked: for " + newUser)
         try {
-            return restTemplate!!.postForObject(serviceUrl + "/persons/save", newUser, UserEntity::class.java) ?: throw Exception("Failed to save user")
+            return restTemplate!!.postForObject(persistenceServiceUrl + "/persons/save", newUser, UserEntity::class.java) ?: throw Exception("Failed to save user")
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
             throw e
@@ -141,7 +171,7 @@ class UsersService(serviceUrl: String) {
     var responseExtractor: ResponseExtractor<String> = ResponseExtractor { arg0 -> arg0.statusText }
 
     //	public User getByNumber(String userNumber) {
-    //		User user = restTemplate.getForObject(serviceUrl
+    //		User user = restTemplate.getForObject(persistenceServiceUrl
     //				+ "/users/{number}", User.class, userNumber);
     //		if (user == null)
     //			throw new UserNotFoundException(userNumber);

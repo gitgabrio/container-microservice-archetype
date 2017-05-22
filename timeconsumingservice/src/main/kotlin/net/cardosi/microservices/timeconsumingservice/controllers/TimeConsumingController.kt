@@ -5,8 +5,8 @@ package net.cardosi.microservices.timeconsumingservice.controllers
 import net.cardosi.microservices.persistenceservice.entities.UserEntity
 import net.cardosi.microservices.timeconsumingservice.services.TimeConsumingService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Controller
-import org.springframework.ui.Model
+import org.springframework.scheduling.annotation.AsyncResult
+import org.springframework.util.concurrent.ListenableFuture
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.annotation.RequestMapping
@@ -32,13 +32,30 @@ class TimeConsumingController(
         binder.setAllowedFields("userNumber", "surname", "name")
     }
 
-    @RequestMapping("/users")
-    fun allUsers(): DeferredResult<List<UserEntity>?> {
-        logger.info("web-service allUsers() invoked")
+    @RequestMapping("/deferredpersons")
+    fun allDeferredUsers(): DeferredResult<List<UserEntity>?> {
+        logger.info("web-service allDeferredUsers() invoked")
         val users = timeConsumingService.findAll()
-        logger.info("web-service allUsers() found: " + users!!)
+        logger.info("web-service allDeferredUsers() found: " + users!!)
         val toReturn : DeferredResult<List<UserEntity>?> = DeferredResult()
         toReturn.setResult(users)
+        return toReturn
+    }
+
+    @RequestMapping("/persons")
+    fun allUsers(): List<UserEntity>? {
+        logger.info("web-service allUsers() invoked")
+        val toReturn = timeConsumingService.findAll()
+        logger.info("web-service allUsers() found: " + toReturn!!)
+        return toReturn
+    }
+
+    @RequestMapping("/listenablepersons")
+    fun allListanableUsers(): ListenableFuture<List<UserEntity>?> {
+        logger.info("web-service allListanableUsers() invoked")
+        val users = timeConsumingService.findAll()
+        logger.info("web-service allListanableUsers() found: " + users!!)
+        val toReturn = AsyncResult(users)
         return toReturn
     }
 

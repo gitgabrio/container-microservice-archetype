@@ -24,11 +24,11 @@
             <artifactId>persistenceservice</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>net.cardosi.microservices</groupId>
-            <artifactId>servicecommon</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>net.cardosi.microservices</groupId>-->
+            <!--<artifactId>servicecommon</artifactId>-->
+            <!--<version>0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
     </dependencies>
     <profiles>
         <profile>

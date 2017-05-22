@@ -26,6 +26,6 @@ eureka:
       defaultZone: http://@eureka.server@/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
-
+    #virtual-host-name: time-consuming-service
 
 

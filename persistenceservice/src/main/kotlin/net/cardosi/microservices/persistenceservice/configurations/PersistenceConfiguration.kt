@@ -3,7 +3,7 @@ package net.cardosi.microservices.persistenceservice.configurations
 
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.boot.orm.jpa.EntityScan
+//import org.springframework.boot.orm.jpa.EntityScan
 import org.springframework.context.annotation.*
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import java.util.logging.Logger
@@ -16,7 +16,7 @@ import javax.sql.DataSource
  */
 @Configuration
 @ComponentScan("net.cardosi.microservices.persistenceservice")
-@EntityScan("net.cardosi.microservices.persistenceservice.entities")
+//@EntityScan("net.cardosi.microservices.persistenceservice.entities")
 @EnableJpaRepositories("net.cardosi.microservices.persistenceservice.repositories")
 //@PropertySource("persistence-server.properties", "classpath:db-config.properties")
 open class PersistenceConfiguration {
