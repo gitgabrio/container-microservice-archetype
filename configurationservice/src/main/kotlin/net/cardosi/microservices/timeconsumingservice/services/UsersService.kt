@@ -5,12 +5,16 @@ package net.cardosi.microservices.timeconsumingservice.services
 import net.cardosi.microservices.persistenceservice.entities.UserEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cloud.client.loadbalancer.LoadBalanced
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
+import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
 import org.springframework.util.concurrent.ListenableFuture
 import org.springframework.web.client.*
 import java.lang.Exception
 import java.util.*
+import java.util.concurrent.ExecutionException
 import java.util.logging.Logger
 import javax.annotation.PostConstruct
 
@@ -20,7 +24,7 @@ import javax.annotation.PostConstruct
  * @author Paul Chapman
  */
 @Service
-class UsersService(persistenceServiceUrl: String,  timeConsumingserviceUrl :String) {
+class UsersService(persistenceServiceUrl: String, timeConsumingserviceUrl: String) {
 
     @Autowired
     @LoadBalanced
@@ -78,11 +82,31 @@ class UsersService(persistenceServiceUrl: String,  timeConsumingserviceUrl :Stri
     @Throws(Exception::class)
     fun findAsyncAll(): List<UserEntity>? {
         logger.info("findAsyncAll() invoked")
-        var users: Array<UserEntity>? = null
+        var users: List<UserEntity>? = null
         try {
+            val method = HttpMethod.GET
+//            val responseType = List::class.java
+            Class<? extends List<UserEntity>> responseType = (Class<? extends List<UserEntity>>) List.class;
+            //create request entity using HttpHeaders
+            val headers = HttpHeaders()
+            headers.contentType = MediaType.TEXT_PLAIN
+            val requestEntity = HttpEntity<String>("params", headers)
+            val future = asyncRestTemplate?.exchange(timeConsumingserviceUrl + "/persons/", method, requestEntity, responseType)
+            try {
+                //waits for the result
+                val entity = future?.get()
+                //prints body source code for the given URL
+                users = entity?.body
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            } catch (e: ExecutionException) {
+                e.printStackTrace()
+            }
+
+
             val future1 = asyncRestTemplate!!.getForEntity(timeConsumingserviceUrl + "/persons/", ListenableFuture::class.java)
-            println("persons " +future1)
-            users = future1.get().
+            println("persons " + future1)
+            //
         } catch (e: Exception) {
             e.printStackTrace()
         }
