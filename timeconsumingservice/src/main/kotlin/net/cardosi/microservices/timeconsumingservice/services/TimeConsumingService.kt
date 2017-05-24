@@ -25,13 +25,13 @@ class TimeConsumingService {
     fun findAll(): List<UserEntity>? {
         logger.info("findAll() invoked")
         val toReturn: ArrayList<UserEntity> = ArrayList()
-        repeat(50) { i ->
+        repeat(5) { i ->
             val toAdd: UserEntity = createUserEntity(i)
             toReturn.add(toAdd)
             try {
                 Thread.sleep(1000)
             } catch (e : InterruptedException) {
-                println("I've been interrupted")
+                logger.info("I've been interrupted")
             }
         }
         return toReturn
@@ -43,6 +43,7 @@ class TimeConsumingService {
         toReturn.id = Integer(id)
         toReturn.name = getSaltString (Random().nextInt(7) + 3)
         toReturn.surname = getSaltString(Random().nextInt(7) + 3)
+        logger.info("Created $toReturn")
         return toReturn
 
     }

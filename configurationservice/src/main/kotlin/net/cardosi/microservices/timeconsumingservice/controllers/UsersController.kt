@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.context.request.async.DeferredResult
 import java.lang.Exception
 import java.util.logging.Logger
 
@@ -51,6 +52,22 @@ class UsersController(
         val users = usersService.findAsyncAll()
         logger.info("web-service allUsers() found: " + users!!)
         model.addAttribute("users", users)
+        return "users"
+    }
+
+    @RequestMapping("/usersdeferred")
+    fun allDeferredUsers(model: Model): String {
+        logger.info("web-service allDeferredUsers() invoked")
+        val deferredResult = usersService.findDeferredAll()
+        deferredResult.onCompletion {
+            if (deferredResult.hasResult()) {
+                val users = deferredResult.result
+                logger.info("web-service allDeferredUsers() found: " + users!!)
+                model.addAttribute("users", users)
+            } else {
+                logger.info("web-service allDeferredUsers() did not find users")
+            }
+        }
         return "users"
     }
 

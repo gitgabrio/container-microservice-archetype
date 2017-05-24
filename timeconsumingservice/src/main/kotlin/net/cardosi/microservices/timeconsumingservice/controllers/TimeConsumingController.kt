@@ -35,10 +35,12 @@ class TimeConsumingController(
     @RequestMapping("/deferredpersons")
     fun allDeferredUsers(): DeferredResult<List<UserEntity>?> {
         logger.info("web-service allDeferredUsers() invoked")
-        val users = timeConsumingService.findAll()
-        logger.info("web-service allDeferredUsers() found: " + users!!)
-        val toReturn : DeferredResult<List<UserEntity>?> = DeferredResult()
-        toReturn.setResult(users)
+        val toReturn: DeferredResult<List<UserEntity>?> = DeferredResult()
+        Thread({
+            val users = timeConsumingService.findAll()
+            logger.info("web-service allDeferredUsers() found: " + users!!)
+            toReturn.setResult(users)
+        }, "MyThread-").start()
         return toReturn
     }
 

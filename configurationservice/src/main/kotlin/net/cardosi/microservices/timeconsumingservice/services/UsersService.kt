@@ -10,11 +10,12 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
-import org.springframework.util.concurrent.ListenableFuture
 import org.springframework.web.client.*
+import org.springframework.web.context.request.async.DeferredResult
 import java.lang.Exception
 import java.util.*
 import java.util.concurrent.ExecutionException
+import java.util.logging.Level
 import java.util.logging.Logger
 import javax.annotation.PostConstruct
 
@@ -85,62 +86,33 @@ class UsersService(persistenceServiceUrl: String, timeConsumingserviceUrl: Strin
         var users: List<UserEntity>? = null
         try {
             val method = HttpMethod.GET
-//            val responseType = List::class.java
-            Class<? extends List<UserEntity>> responseType = (Class<? extends List<UserEntity>>) List.class;
+            val responseType = genericClass<List<UserEntity>>()
             //create request entity using HttpHeaders
             val headers = HttpHeaders()
             headers.contentType = MediaType.TEXT_PLAIN
             val requestEntity = HttpEntity<String>("params", headers)
             val future = asyncRestTemplate?.exchange(timeConsumingserviceUrl + "/persons/", method, requestEntity, responseType)
-            try {
-                //waits for the result
-                val entity = future?.get()
-                //prints body source code for the given URL
-                users = entity?.body
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            } catch (e: ExecutionException) {
-                e.printStackTrace()
-            }
-
-
-            val future1 = asyncRestTemplate!!.getForEntity(timeConsumingserviceUrl + "/persons/", ListenableFuture::class.java)
-            println("persons " + future1)
-            //
+            //waits for the result
+            val entity = future?.get()
+            //prints body source code for the given URL
+            users = entity?.body
         } catch (e: Exception) {
-            e.printStackTrace()
+            logger.log(Level.SEVERE, e.message, e)
         }
+        return users
+    }
 
+    @Throws(Exception::class)
+    fun findDeferredAll(): DeferredResult<List<UserEntity>?> {
+        logger.info("findDeferredAll() invoked")
+        var toReturn: DeferredResult<List<UserEntity>?> = DeferredResult()
         try {
-            val future1 = asyncRestTemplate!!.getForEntity(timeConsumingserviceUrl + "/listenablepersons/", ListenableFuture::class.java)
-            println("listenablepersons " + future1)
+            val responseType = genericClass<DeferredResult<List<UserEntity>?>>()
+            toReturn = restTemplate!!.getForObject(timeConsumingserviceUrl + "/deferredpersons/", responseType)
         } catch (e: Exception) {
-            e.printStackTrace()
+            logger.log(Level.SEVERE, e.message, e)
         }
-
-        try {
-            val future1 = asyncRestTemplate!!.getForEntity(timeConsumingserviceUrl + "/deferredpersons/", ListenableFuture::class.java)
-            println("deferredpersons " + future1)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-//        try {
-//            //TODO Check endpoint path - manage response
-//            asyncRestTemplate!!.getForEntity(timeConsumingserviceUrl + "/persons/", HttpMethod.GET)
-//
-//            val future: ListenableFuture<String> = asyncRestTemplate!!.execute(timeConsumingserviceUrl + "/persons/", HttpMethod.GET, requestCallback, responseExtractor)
-//            //waits for the result
-//            val result = future.get()
-//            println(result)
-//        } catch (e: HttpClientErrorException) { // 404
-//            // Nothing found
-//            return null
-//        }
-        if (users == null || users.size == 0)
-            return null
-        else
-            return Arrays.asList(*users)
+        return toReturn
     }
 
     @Throws(Exception::class)
@@ -206,4 +178,5 @@ class UsersService(persistenceServiceUrl: String, timeConsumingserviceUrl: Strin
     //	private User getUser(String userNumber) {
     //
     //	}
+    private inline fun <reified T : Any> genericClass(): Class<T> = T::class.java
 }

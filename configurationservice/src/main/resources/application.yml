@@ -16,6 +16,8 @@ error:
 # HTTP Server
 server:
   port: @eureka.port@   # HTTP (Tomcat) port
+  connection-timeout: -1
+
 
 # Discovery Server Access
 #  1. DEV ONLY: Reduce the lease renewal interval to speed up registration
