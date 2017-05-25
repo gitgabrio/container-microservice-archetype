@@ -1,6 +1,6 @@
 @file:JvmName("UsersService")
 
-package net.cardosi.microservices.timeconsumingservice.services
+package net.cardosi.microservices.configurationservice.services
 
 import net.cardosi.microservices.persistenceservice.entities.UserEntity
 import org.springframework.beans.factory.annotation.Autowired
@@ -80,40 +80,40 @@ class UsersService(persistenceServiceUrl: String, timeConsumingserviceUrl: Strin
             return Arrays.asList(*users)
     }
 
-    @Throws(Exception::class)
-    fun findAsyncAll(): List<UserEntity>? {
-        logger.info("findAsyncAll() invoked")
-        var users: List<UserEntity>? = null
-        try {
-            val method = HttpMethod.GET
-            val responseType = genericClass<List<UserEntity>>()
-            //create request entity using HttpHeaders
-            val headers = HttpHeaders()
-            headers.contentType = MediaType.TEXT_PLAIN
-            val requestEntity = HttpEntity<String>("params", headers)
-            val future = asyncRestTemplate?.exchange(timeConsumingserviceUrl + "/persons/", method, requestEntity, responseType)
-            //waits for the result
-            val entity = future?.get()
-            //prints body source code for the given URL
-            users = entity?.body
-        } catch (e: Exception) {
-            logger.log(Level.SEVERE, e.message, e)
-        }
-        return users
-    }
-
-    @Throws(Exception::class)
-    fun findDeferredAll(): DeferredResult<List<UserEntity>?> {
-        logger.info("findDeferredAll() invoked")
-        var toReturn: DeferredResult<List<UserEntity>?> = DeferredResult()
-        try {
-            val responseType = genericClass<DeferredResult<List<UserEntity>?>>()
-            toReturn = restTemplate!!.getForObject(timeConsumingserviceUrl + "/deferredpersons/", responseType)
-        } catch (e: Exception) {
-            logger.log(Level.SEVERE, e.message, e)
-        }
-        return toReturn
-    }
+//    @Throws(Exception::class)
+//    fun findAsyncAll(): List<UserEntity>? {
+//        logger.info("findAsyncAll() invoked")
+//        var users: List<UserEntity>? = null
+//        try {
+//            val method = HttpMethod.GET
+//            val responseType = genericClass<List<UserEntity>>()
+//            //create request entity using HttpHeaders
+//            val headers = HttpHeaders()
+//            headers.contentType = MediaType.TEXT_PLAIN
+//            val requestEntity = HttpEntity<String>("params", headers)
+//            val future = asyncRestTemplate?.exchange(timeConsumingserviceUrl + "/persons/", method, requestEntity, responseType)
+//            //waits for the result
+//            val entity = future?.get()
+//            //prints body source code for the given URL
+//            users = entity?.body
+//        } catch (e: Exception) {
+//            logger.log(Level.SEVERE, e.message, e)
+//        }
+//        return users
+//    }
+//
+//    @Throws(Exception::class)
+//    fun findDeferredAll(): DeferredResult<List<UserEntity>?> {
+//        logger.info("findDeferredAll() invoked")
+//        var toReturn: DeferredResult<List<UserEntity>?> = DeferredResult()
+//        try {
+//            val responseType = genericClass<DeferredResult<List<UserEntity>?>>()
+//            toReturn = restTemplate!!.getForObject(timeConsumingserviceUrl + "/deferredpersons/", responseType)
+//        } catch (e: Exception) {
+//            logger.log(Level.SEVERE, e.message, e)
+//        }
+//        return toReturn
+//    }
 
     @Throws(Exception::class)
     fun findByNumber(userNumber: Integer): UserEntity? {

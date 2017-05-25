@@ -21,22 +21,22 @@ class TimeConsumingService {
     protected var logger = Logger.getLogger(TimeConsumingService::class.java.name)
 
 
-    @Throws(Exception::class)
-    fun findAll(): List<UserEntity>? {
-        logger.info("findAll() invoked")
-        val toReturn: ArrayList<UserEntity> = ArrayList()
-        repeat(5) { i ->
-            val toAdd: UserEntity = createUserEntity(i)
-            toReturn.add(toAdd)
-            try {
-                Thread.sleep(1000)
-            } catch (e : InterruptedException) {
-                logger.info("I've been interrupted")
-            }
-        }
-        return toReturn
-
-    }
+//    @Throws(Exception::class)
+//    fun findAll(): List<UserEntity>? {
+//        logger.info("findAll() invoked")
+//        val toReturn: ArrayList<UserEntity> = ArrayList()
+//        repeat(5) { i ->
+//            val toAdd: UserEntity = createUserEntity(i)
+//            toReturn.add(toAdd)
+//            try {
+//                Thread.sleep(1000)
+//            } catch (e : InterruptedException) {
+//                logger.info("I've been interrupted")
+//            }
+//        }
+//        return toReturn
+//
+//    }
 
     private fun createUserEntity(id: Int): UserEntity {
         val toReturn = UserEntity()

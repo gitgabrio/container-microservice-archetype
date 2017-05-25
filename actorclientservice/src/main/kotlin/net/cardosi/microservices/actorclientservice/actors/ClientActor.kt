@@ -36,13 +36,15 @@ open class ClientActor(val eurekaClient: EurekaClient) : UntypedActor() {
     private fun sendIdentifyRequest() {
         val nextServerInfo =eurekaClient.getNextServerFromEureka("akka.server.actor", false)
         val servicePort = nextServerInfo.metadata["port"]
-        val serviceUrl = nextServerInfo.hostName + ":$servicePort"
+       // val serviceUrl = nextServerInfo.hostName + ":$servicePort"
+        val serviceUrl = "127.0.0.1:$servicePort"
 
         path = "akka.tcp://RemoteWorkerSystem@$serviceUrl/user/serverActor"
         //        path = "akka.tcp://RemoteWorkerSystem@localhost" + ":" + nextServerInfo.getPort() + "/user/remoteActor";
-        println("Sending message to server " + serviceUrl)
+        println("Sending message to " + path)
 
-        context.actorSelection(path).tell(Identify(path), self)
+        context.actorSelection(path).tell(Identify("ciccio"), self)
+//        context.actorSelection(path).tell("CICCIO", self)
     }
 
     @Throws(Exception::class)

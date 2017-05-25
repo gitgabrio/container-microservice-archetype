@@ -2,6 +2,7 @@
 package net.cardosi.microservices.actorserverservice
 
 import net.cardosi.microservices.actorserverservice.configurations.ActorServerConfiguration
+import net.cardosi.microservices.actorserverservice.configurations.WebSocketConfiguration
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient
@@ -16,7 +17,7 @@ import org.springframework.context.annotation.Import
 @SpringBootApplication
 @EnableDiscoveryClient
 @ComponentScan(useDefaultFilters = false) // Disable component scanner
-@Import(ActorServerConfiguration::class)
+@Import(ActorServerConfiguration::class, WebSocketConfiguration::class)
 open class ActorServerServer {
 
     companion object {

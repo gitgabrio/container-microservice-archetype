@@ -1,5 +1,5 @@
-@file:JvmName("UsersController")
-package net.cardosi.microservices.timeconsumingservice.controllers
+@file:JvmName("HomeController")
+package net.cardosi.microservices.actorserverservice.controllers
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping

@@ -1,7 +1,7 @@
 @file:JvmName("ConfigurationServer")
-package net.cardosi.microservices.timeconsumingservice
+package net.cardosi.microservices.configurationservice
 
-import net.cardosi.microservices.timeconsumingservice.configurations.ConfigurationConfiguration
+import net.cardosi.microservices.configurationservice.configurations.ConfigurationConfiguration
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient

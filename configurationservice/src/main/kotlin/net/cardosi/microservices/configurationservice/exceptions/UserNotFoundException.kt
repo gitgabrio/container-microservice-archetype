@@ -1,5 +1,5 @@
 @file:JvmName("UserNotFoundException")
-package net.cardosi.microservices.timeconsumingservice.exceptions
+package net.cardosi.microservices.configurationservice.exceptions
 
 /**
  * Created by Gabriele Cardosi - gcardosi@cardosi.net on 26/10/2016.

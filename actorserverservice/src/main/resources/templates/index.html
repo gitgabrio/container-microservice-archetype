@@ -1,32 +1,49 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
-
-<head th:replace="header :: copy"></head>
-
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Realtime Guestbook</title>
+</head>
 <body>
-	<h1>Microservices Demo - Users Server</h1>
+	<div>
+		<p>Write a message:</p>
+		<textarea id="message"></textarea>
+		<button type="button" id="send">Send</button>
+	</div>
+	<div>
+		<h3>Messages:</h3>
+		<ol id="messages"></ol>
+	</div>
 
-	<p>Users Server Microservice is running.</p>
+	<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
-	<p>
-		This user should exist: <a href="/users/123456789">123456789</a>.
-		Look in <code>data.sql</code> to see the rest
-	</p>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var messageList = $("#messages");
 
-	<h3>Spring Boot URLs</h3>
-	<p>For those interested, Spring Boot provides RESTful URLs for
-		interrogating your application (they return JSON format data):</p>
+			var getMessageString = function(message) {
+				return message;
+			};
 
-	<ul>
-		<li><a th:href="@{/beans}">The beans</a></li>
-		<li><a th:href="@{/env}">The environment</a></li>
-		<li><a th:href="@{/health}">Application health</a></li>
-		<li><a th:href="@{/metrics}">Application metrics</a></li>
-		<li><a th:href="@{/trace}">Request call trace</a></li>
-	</ul>
+			var socket = new SockJS('/guestbook');
+			var stompClient = Stomp.over(socket);
+            stompClient.connect({ }, function(frame) {
+            	// subscribe to the /topic/entries endpoint which feeds newly added messages
+                stompClient.subscribe('/topic/entries', function(data) {
+                	// when a message is received add it to the end of the list
+                    var body = data.body;
+                    var message = JSON.parse(body);
+                    messageList.append(getMessageString(message));
+                });
+            });
 
-	<div th:replace="footer :: copy"></div>
-
+            $("#send").on("click", function() {
+            	// send the message
+            	stompClient.send("/app/guestbook", {}, $("#message").val());
+            	$("#message").val("");
+            });
+		});
+	</script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 @file:JvmName("SearchCriteria")
-package net.cardosi.microservices.timeconsumingservice.criterias
+package net.cardosi.microservices.configurationservice.criterias
 
 
 import org.springframework.util.StringUtils

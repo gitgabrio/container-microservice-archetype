@@ -1,7 +1,7 @@
 @file:JvmName("MainStarter")
 
 import net.cardosi.microservices.registrationservice.RegistrationServer
-import net.cardosi.microservices.timeconsumingservice.ConfigurationServer
+import net.cardosi.microservices.configurationservice.ConfigurationServer
 import net.cardosi.microservices.persistenceservice.PersistenceServer
 import kotlin.concurrent.thread
 

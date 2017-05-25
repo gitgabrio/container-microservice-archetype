@@ -53,6 +53,19 @@
     </profiles>
     <build>
         <finalName>${finalName}</finalName>
+        <resources>
+                    <resource>
+                        <filtering>true</filtering>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>**/*.yml</include>
+                            <include>**/*.sql</include>
+                            <include>**/*.html</include>
+                            <include>**/*.conf</include>
+                            <include>**/*.properties</include>
+                        </includes>
+                    </resource>
+                </resources>
     </build>
 
 

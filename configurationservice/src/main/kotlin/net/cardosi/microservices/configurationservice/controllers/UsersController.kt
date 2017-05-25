@@ -1,9 +1,9 @@
 @file:JvmName("UsersController")
 
-package net.cardosi.microservices.timeconsumingservice.controllers
+package net.cardosi.microservices.configurationservice.controllers
 
-import net.cardosi.microservices.timeconsumingservice.criterias.SearchCriteria
-import net.cardosi.microservices.timeconsumingservice.services.UsersService
+import net.cardosi.microservices.configurationservice.criterias.SearchCriteria
+import net.cardosi.microservices.configurationservice.services.UsersService
 import net.cardosi.microservices.persistenceservice.entities.UserEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -46,30 +46,30 @@ class UsersController(
         return "users"
     }
 
-    @RequestMapping("/usersasync")
-    fun allAsyncUsers(model: Model): String {
-        logger.info("web-service allUsers() invoked")
-        val users = usersService.findAsyncAll()
-        logger.info("web-service allUsers() found: " + users!!)
-        model.addAttribute("users", users)
-        return "users"
-    }
-
-    @RequestMapping("/usersdeferred")
-    fun allDeferredUsers(model: Model): String {
-        logger.info("web-service allDeferredUsers() invoked")
-        val deferredResult = usersService.findDeferredAll()
-        deferredResult.onCompletion {
-            if (deferredResult.hasResult()) {
-                val users = deferredResult.result
-                logger.info("web-service allDeferredUsers() found: " + users!!)
-                model.addAttribute("users", users)
-            } else {
-                logger.info("web-service allDeferredUsers() did not find users")
-            }
-        }
-        return "users"
-    }
+//    @RequestMapping("/usersasync")
+//    fun allAsyncUsers(model: Model): String {
+//        logger.info("web-service allUsers() invoked")
+//        val users = usersService.findAsyncAll()
+//        logger.info("web-service allUsers() found: " + users!!)
+//        model.addAttribute("users", users)
+//        return "users"
+//    }
+//
+//    @RequestMapping("/usersdeferred")
+//    fun allDeferredUsers(model: Model): String {
+//        logger.info("web-service allDeferredUsers() invoked")
+//        val deferredResult = usersService.findDeferredAll()
+//        deferredResult.onCompletion {
+//            if (deferredResult.hasResult()) {
+//                val users = deferredResult.result
+//                logger.info("web-service allDeferredUsers() found: " + users!!)
+//                model.addAttribute("users", users)
+//            } else {
+//                logger.info("web-service allDeferredUsers() did not find users")
+//            }
+//        }
+//        return "users"
+//    }
 
     @RequestMapping("/users/{userNumber}")
     fun byNumber(model: Model,
