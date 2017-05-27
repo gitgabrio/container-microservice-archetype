@@ -2,16 +2,14 @@ package net.cardosi.microservices.persistenceservice.controllers
 
 
 
-import net.cardosi.microservices.dto.InterfaceDTO
 import net.cardosi.microservices.persistenceservice.entities.InterfaceEntity
 import net.cardosi.microservices.persistenceservice.exceptions.EntityNotFoundException
 import org.springframework.data.repository.CrudRepository
-
 import java.io.Serializable
 import java.util.logging.Logger
 
 
-abstract class AbstractEntityController<D : InterfaceDTO, ID : Serializable, T : InterfaceEntity, E : CrudRepository<T, ID>>
+abstract class AbstractEntityService<T : InterfaceEntity, ID : Serializable, E : CrudRepository<T, ID>>
 /**
  * Create an instance plugging in the repository of Users.
 
@@ -19,7 +17,7 @@ abstract class AbstractEntityController<D : InterfaceDTO, ID : Serializable, T :
  */
 (protected var repository: E) {
 
-    protected var logger = Logger.getLogger(AbstractEntityController::class.java.simpleName)
+    protected var logger = Logger.getLogger(AbstractEntityService::class.java.simpleName)
 
     init {
         logger.info("Repository says system has " + repository.count() + " entities")

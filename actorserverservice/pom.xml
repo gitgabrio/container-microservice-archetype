@@ -13,21 +13,17 @@
         <groupId>net.cardosi.microservices</groupId>
         <artifactId>serviceparent</artifactId>
         <version>0.1-SNAPSHOT</version>
+        <relativePath>../serviceparent</relativePath>
     </parent>
 
 
     <properties>
         <!-- Stand-alone RESTFul application for testing only -->
         <start-class>net.cardosi.microservices.actorserverservice.ActorServerServer</start-class>
-        <finalName>actorserverservice-${version}</finalName>
+        <finalName>actorserverservice-${project.version}</finalName>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>net.cardosi.microservices</groupId>
-            <artifactId>servicecommon</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
             <artifactId>akka-actor_2.11</artifactId>
@@ -59,7 +55,7 @@
                 <akka.port>12552</akka.port>
                 <virtual-hostname>akka.server.actor</virtual-hostname>
                 <application.name>actorserver-service-A</application.name>
-                <finalName>actorserverservice-localhost-${version}</finalName>
+                <finalName>actorserverservice-localhost-${project.version}</finalName>
             </properties>
         </profile>
         <profile>
@@ -71,25 +67,25 @@
                 <akka.port>2553</akka.port>
                 <virtual-hostname>akka.server.actor</virtual-hostname>
                 <application.name>actorserver-service-B</application.name>
-                <finalName>actorserverservice-localhost-${version}</finalName>
+                <finalName>actorserverservice-localhost-${project.version}</finalName>
             </properties>
         </profile>
     </profiles>
     <build>
         <finalName>${finalName}</finalName>
-        <resources>
-            <resource>
-                <filtering>true</filtering>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.yml</include>
-                    <include>**/*.sql</include>
-                    <include>**/*.html</include>
-                    <include>**/*.conf</include>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-        </resources>
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--<filtering>true</filtering>-->
+                <!--<directory>src/main/resources</directory>-->
+                <!--<includes>-->
+                    <!--<include>**/*.yml</include>-->
+                    <!--<include>**/*.sql</include>-->
+                    <!--<include>**/*.html</include>-->
+                    <!--<include>**/*.conf</include>-->
+                    <!--<include>**/*.properties</include>-->
+                <!--</includes>-->
+            <!--</resource>-->
+        <!--</resources>-->
     </build>
 
 

@@ -10,6 +10,7 @@
         <groupId>net.cardosi.microservices</groupId>
         <artifactId>serviceparent</artifactId>
         <version>0.1-SNAPSHOT</version>
+        <relativePath>../serviceparent</relativePath>
     </parent>
 
     <properties>
@@ -17,7 +18,7 @@
         <start-class>net.cardosi.microservices.registrationservice.RegistrationServer</start-class>
         <eureka.port>1111</eureka.port>
         <eureka.hostname>localhost</eureka.hostname>
-        <finalName>registrationservice-${version}</finalName>
+        <finalName>registrationservice-${project.version}</finalName>
     </properties>
 
     <profiles>
@@ -26,7 +27,7 @@
             <properties>
                 <eureka.port>1111</eureka.port>
                 <eureka.hostname>localhost</eureka.hostname>
-                <finalName>registrationservice-sweetpenguin-${version}</finalName>
+                <finalName>registrationservice-sweetpenguin-${project.version}</finalName>
             </properties>
         </profile>
     </profiles>

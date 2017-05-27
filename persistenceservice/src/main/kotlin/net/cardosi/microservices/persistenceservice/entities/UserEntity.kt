@@ -16,15 +16,15 @@ class UserEntity : InterfaceEntity {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Basic
     @Column(name = "id")
-    var id: Integer? = null
+    var id: Int = 0
 
     @Basic
     @Column(name = "name")
-    var name: String? = null
+    var name: String = ""
 
     @Basic
     @Column(name = "surname")
-    var surname: String? = null
+    var surname: String = ""
 
 
     override fun equals(other: Any?): Boolean{
@@ -39,10 +39,14 @@ class UserEntity : InterfaceEntity {
     }
 
     override fun hashCode(): Int{
-        var result = id?.hashCode() ?: 0
-        result = 31 * result + (name?.hashCode() ?: 0)
-        result = 31 * result + (surname?.hashCode() ?: 0)
+        var result = id.hashCode() ?: 0
+        result = 31 * result + (name.hashCode() ?: 0)
+        result = 31 * result + (surname.hashCode() ?: 0)
         return result
+    }
+
+    override fun toString(): String{
+        return "UserEntity(id=$id, name=$name, surname=$surname)"
     }
 
 

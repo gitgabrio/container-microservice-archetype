@@ -13,6 +13,7 @@
         <groupId>net.cardosi.microservices</groupId>
         <artifactId>serviceparent</artifactId>
         <version>0.1-SNAPSHOT</version>
+        <relativePath>../serviceparent</relativePath>
     </parent>
 
 
@@ -23,11 +24,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>net.cardosi.microservices</groupId>
-            <artifactId>servicecommon</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
             <artifactId>akka-actor_2.11</artifactId>
@@ -47,7 +43,7 @@
                 <eureka.port>5555</eureka.port>
                 <eureka.hostname>localhost</eureka.hostname>
                 <eureka.server>localhost:1111</eureka.server>
-                <finalName>actorclientservice-localhost-${version}</finalName>
+                <finalName>actorclientservice-localhost-${project.version}</finalName>
             </properties>
         </profile>
     </profiles>

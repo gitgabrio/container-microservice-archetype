@@ -10,7 +10,7 @@
 		<groupId>net.cardosi.microservices</groupId>
 		<artifactId>serviceparent</artifactId>
 		<version>0.1-SNAPSHOT</version>
-		<relativePath></relativePath>
+		<relativePath>../serviceparent</relativePath>
 	</parent>
 
 	<properties>
@@ -32,7 +32,7 @@
 				<eureka.port>2222</eureka.port>
 				<eureka.hostname>localhost</eureka.hostname>
 				<eureka.server>localhost:1111</eureka.server>
-				<finalName>persistenceservice-localhost-${version}</finalName>
+				<finalName>persistenceservice-localhost-${project.version}</finalName>
 			</properties>
 		</profile>
 	</profiles>
