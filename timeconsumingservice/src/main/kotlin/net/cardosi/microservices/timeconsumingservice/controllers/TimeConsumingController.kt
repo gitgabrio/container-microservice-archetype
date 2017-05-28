@@ -5,8 +5,7 @@ package net.cardosi.microservices.timeconsumingservice.controllers
 import net.cardosi.microservices.persistenceservice.entities.UserEntity
 import net.cardosi.microservices.timeconsumingservice.services.TimeConsumingService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.scheduling.annotation.AsyncResult
-import org.springframework.util.concurrent.ListenableFuture
+import org.springframework.scheduling.annotation.Async
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.annotation.RequestMapping
@@ -27,22 +26,29 @@ class TimeConsumingController(
 
     protected var logger = Logger.getLogger(TimeConsumingController::class.java.name)
 
+    private var counter :Int = 0
+
     @InitBinder
     fun initBinder(binder: WebDataBinder) {
         binder.setAllowedFields("userNumber", "surname", "name")
     }
 
-//    @RequestMapping("/deferredpersons")
-//    fun allDeferredUsers(): DeferredResult<List<UserEntity>?> {
-//        logger.info("web-service allDeferredUsers() invoked")
-//        val toReturn: DeferredResult<List<UserEntity>?> = DeferredResult()
-//        Thread({
-//            val users = timeConsumingService.findAll()
-//            logger.info("web-service allDeferredUsers() found: " + users!!)
-//            toReturn.setResult(users)
-//        }, "MyThread-").start()
-//        return toReturn
-//    }
+    /*
+     Use for long-polling
+     */
+    @RequestMapping("/deferredpersons")
+    @Async // This means it will run on a different thread
+    fun allDeferredUsers(): DeferredResult<List<UserEntity>?> {
+        logger.info("web-service allDeferredUsers() invoked")
+        val toReturn: DeferredResult<List<UserEntity>?> = DeferredResult()
+        Thread({
+            val users = timeConsumingService.findAll()
+            logger.info("web-service allDeferredUsers() found: " + users!!)
+            toReturn.setResult(users)
+        }, "MyThread-$counter" ).start()
+        counter +=1
+        return toReturn
+    }
 //
 //    @RequestMapping("/persons")
 //    fun allUsers(): List<UserEntity>? {

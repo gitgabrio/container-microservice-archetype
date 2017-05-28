@@ -2,20 +2,13 @@
 
 package net.cardosi.microservices.configurationservice.services
 
-import net.cardosi.microservices.persistenceservice.entities.UserEntity
+import net.cardosi.microservices.dto.UserDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cloud.client.loadbalancer.LoadBalanced
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
-import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
 import org.springframework.web.client.*
-import org.springframework.web.context.request.async.DeferredResult
 import java.lang.Exception
 import java.util.*
-import java.util.concurrent.ExecutionException
-import java.util.logging.Level
 import java.util.logging.Logger
 import javax.annotation.PostConstruct
 
@@ -65,11 +58,11 @@ class UsersService(persistenceServiceUrl: String, timeConsumingserviceUrl: Strin
     }
 
     @Throws(Exception::class)
-    fun findAll(): List<UserEntity>? {
+    fun findAll(): List<UserDTO>? {
         logger.info("findAll() invoked")
-        var users: Array<UserEntity>? = null
+        var users: Array<UserDTO>? = null
         try {
-            users = restTemplate!!.getForObject(persistenceServiceUrl + "/persons/", Array<UserEntity>::class.java)
+            users = restTemplate!!.getForObject(persistenceServiceUrl + "/persons/", Array<UserDTO>::class.java)
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
             return null
@@ -81,12 +74,12 @@ class UsersService(persistenceServiceUrl: String, timeConsumingserviceUrl: Strin
     }
 
 //    @Throws(Exception::class)
-//    fun findAsyncAll(): List<UserEntity>? {
+//    fun findAsyncAll(): List<UserDTO>? {
 //        logger.info("findAsyncAll() invoked")
-//        var users: List<UserEntity>? = null
+//        var users: List<UserDTO>? = null
 //        try {
 //            val method = HttpMethod.GET
-//            val responseType = genericClass<List<UserEntity>>()
+//            val responseType = genericClass<List<UserDTO>>()
 //            //create request entity using HttpHeaders
 //            val headers = HttpHeaders()
 //            headers.contentType = MediaType.TEXT_PLAIN
@@ -103,11 +96,11 @@ class UsersService(persistenceServiceUrl: String, timeConsumingserviceUrl: Strin
 //    }
 //
 //    @Throws(Exception::class)
-//    fun findDeferredAll(): DeferredResult<List<UserEntity>?> {
+//    fun findDeferredAll(): DeferredResult<List<UserDTO>?> {
 //        logger.info("findDeferredAll() invoked")
-//        var toReturn: DeferredResult<List<UserEntity>?> = DeferredResult()
+//        var toReturn: DeferredResult<List<UserDTO>?> = DeferredResult()
 //        try {
-//            val responseType = genericClass<DeferredResult<List<UserEntity>?>>()
+//            val responseType = genericClass<DeferredResult<List<UserDTO>?>>()
 //            toReturn = restTemplate!!.getForObject(timeConsumingserviceUrl + "/deferredpersons/", responseType)
 //        } catch (e: Exception) {
 //            logger.log(Level.SEVERE, e.message, e)
@@ -116,32 +109,32 @@ class UsersService(persistenceServiceUrl: String, timeConsumingserviceUrl: Strin
 //    }
 
     @Throws(Exception::class)
-    fun findByNumber(userNumber: Integer): UserEntity? {
+    fun findByNumber(userNumber: Integer): UserDTO? {
         logger.info("findByNumber() invoked: for $userNumber")
         try {
-            return restTemplate!!.getForObject(persistenceServiceUrl + "/persons/{id}", UserEntity::class.java, userNumber)
+            return restTemplate!!.getForObject(persistenceServiceUrl + "/persons/{id}", UserDTO::class.java, userNumber)
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
             return null
         }
     }
 
-    fun findBySurnameAndName(surname: String, name: String): UserEntity? {
+    fun findBySurnameAndName(surname: String, name: String): UserDTO? {
         logger.info("findBySurnameAndName() invoked:  for $surname $name")
-        var user: UserEntity? = null
+        var user: UserDTO? = null
         try {
-            user = restTemplate!!.getForObject(persistenceServiceUrl + "/persons/{surname}/{name}", UserEntity::class.java, surname, name)
+            user = restTemplate!!.getForObject(persistenceServiceUrl + "/persons/{surname}/{name}", UserDTO::class.java, surname, name)
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
         }
         return user
     }
 
-    fun findBySurname(surname: String): List<UserEntity>? {
+    fun findBySurname(surname: String): List<UserDTO>? {
         logger.info("findBySurname() invoked:  for $surname ")
-        var users: Array<UserEntity>? = null
+        var users: Array<UserDTO>? = null
         try {
-            users = restTemplate!!.getForObject(persistenceServiceUrl + "/persons/surname/{surname}", Array<UserEntity>::class.java, surname)
+            users = restTemplate!!.getForObject(persistenceServiceUrl + "/persons/surname/{surname}", Array<UserDTO>::class.java, surname)
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
         }
@@ -152,10 +145,10 @@ class UsersService(persistenceServiceUrl: String, timeConsumingserviceUrl: Strin
     }
 
     @Throws(Exception::class)
-    fun saveUser(newUser: UserEntity): UserEntity {
+    fun saveUser(newUser: UserDTO): UserDTO {
         logger.info("saveUser() invoked: for " + newUser)
         try {
-            return restTemplate!!.postForObject(persistenceServiceUrl + "/persons/save", newUser, UserEntity::class.java) ?: throw Exception("Failed to save user")
+            return restTemplate!!.postForObject(persistenceServiceUrl + "/persons/save", newUser, UserDTO::class.java) ?: throw Exception("Failed to save user")
         } catch (e: HttpClientErrorException) { // 404
             // Nothing found
             throw e

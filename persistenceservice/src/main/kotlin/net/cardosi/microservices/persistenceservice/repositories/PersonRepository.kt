@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository
 
  * @author Paul Chapman
  */
-interface PersonRepository : CrudRepository<UserEntity, Integer> {
+interface PersonRepository : CrudRepository<UserEntity, Int> {
 
     fun findBySurnameAndName(surname : String, name: String) : UserEntity
 

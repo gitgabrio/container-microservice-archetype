@@ -4,7 +4,7 @@ package net.cardosi.microservices.configurationservice.controllers
 
 import net.cardosi.microservices.configurationservice.criterias.SearchCriteria
 import net.cardosi.microservices.configurationservice.services.UsersService
-import net.cardosi.microservices.persistenceservice.entities.UserEntity
+import net.cardosi.microservices.dto.UserDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.context.request.async.DeferredResult
 import java.lang.Exception
 import java.util.logging.Logger
 
@@ -132,13 +131,13 @@ class UsersController(
 
     @RequestMapping(value = "/users/add", method = arrayOf(RequestMethod.GET))
     fun addUser(model: Model): String {
-        val user = UserEntity()
+        val user = UserDTO(null, "", "")
         model.addAttribute("newUser", user)
         return "userAdd"
     }
 
     @RequestMapping(value = "/users/doadd")
-    fun doAdd(model: Model, toAdd: UserEntity,
+    fun doAdd(model: Model, toAdd: UserDTO,
               result: BindingResult): String? {
         logger.info("web-service doAdd() invoked $toAdd")
         try {
