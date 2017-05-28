@@ -56,7 +56,7 @@
                 <eureka.port>6666</eureka.port>
                 <eureka.hostname>localhost</eureka.hostname>
                 <eureka.server>localhost:1111</eureka.server>
-                <akka.port>12552</akka.port>
+                <akka.port>2552</akka.port>
                 <virtual-hostname>akka.server.actor</virtual-hostname>
                 <application.name>actorserver-service-A</application.name>
                 <finalName>actorserverservice-localhost-${version}</finalName>
@@ -77,19 +77,6 @@
     </profiles>
     <build>
         <finalName>${finalName}</finalName>
-        <resources>
-            <resource>
-                <filtering>true</filtering>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.yml</include>
-                    <include>**/*.sql</include>
-                    <include>**/*.html</include>
-                    <include>**/*.conf</include>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-        </resources>
     </build>
 
 
