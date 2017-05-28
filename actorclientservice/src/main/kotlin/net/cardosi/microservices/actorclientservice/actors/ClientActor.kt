@@ -43,8 +43,7 @@ open class ClientActor(val eurekaClient: EurekaClient) : UntypedActor() {
         //        path = "akka.tcp://RemoteWorkerSystem@localhost" + ":" + nextServerInfo.getPort() + "/user/remoteActor";
         println("Sending message to " + path)
 
-        context.actorSelection(path).tell(Identify("ciccio"), self)
-//        context.actorSelection(path).tell("CICCIO", self)
+        context.actorSelection(path).tell(Identify(path), self)
     }
 
     @Throws(Exception::class)
