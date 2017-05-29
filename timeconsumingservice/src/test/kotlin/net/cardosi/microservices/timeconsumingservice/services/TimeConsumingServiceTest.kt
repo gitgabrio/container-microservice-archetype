@@ -1,8 +1,7 @@
 package net.cardosi.microservices.timeconsumingservice.services
 
 import net.cardosi.microservices.persistenceservice.entities.UserEntity
-import net.cardosi.microservices.timeconsumingservice.AbstractContextTest
-import net.cardosi.microservices.timeconsumingservice.controllers.HomeController
+import net.cardosi.microservices.timeconsumingservice.AbstractTimeConsumingServiceTest
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -11,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 /**
  * Created by Gabriele Cardosi - gcardosi@cardosi.net on 27/05/17.
  */
-class TimeConsumingServiceTest : AbstractContextTest() {
+class TimeConsumingServiceTest : AbstractTimeConsumingServiceTest() {
 
     @Autowired
     var timeConsumingService: TimeConsumingService? = null

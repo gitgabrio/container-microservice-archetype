@@ -1,6 +1,6 @@
 package net.cardosi.microservices.timeconsumingservice.configurations
 
-import net.cardosi.microservices.timeconsumingservice.AbstractContextTest
+import net.cardosi.microservices.timeconsumingservice.AbstractTimeConsumingServiceTest
 import net.cardosi.microservices.timeconsumingservice.controllers.HomeController
 import net.cardosi.microservices.timeconsumingservice.controllers.TimeConsumingController
 import net.cardosi.microservices.timeconsumingservice.services.TimeConsumingService
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 /**
  * Created by Gabriele Cardosi - gcardosi@cardosi.net on 27/05/17.
  */
-class TimeConsumingConfigurationTest : AbstractContextTest() {
+class TimeConsumingConfigurationTest : AbstractTimeConsumingServiceTest() {
 
     @Autowired
     var timeConsumingService : TimeConsumingService? = null

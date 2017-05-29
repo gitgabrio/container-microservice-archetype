@@ -40,7 +40,7 @@ class TimeConsumingService {
 
     private fun createUserEntity(id: Int): UserEntity {
         val toReturn = UserEntity()
-        toReturn.id = Integer(id)
+        toReturn.id = id
         toReturn.name = getSaltString (Random().nextInt(7) + 3)
         toReturn.surname = getSaltString(Random().nextInt(7) + 3)
         logger.info("Created $toReturn")
