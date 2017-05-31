@@ -16,9 +16,7 @@ import javax.sql.DataSource
  */
 @Configuration
 @ComponentScan("net.cardosi.microservices.persistenceservice")
-//@EntityScan("net.cardosi.microservices.persistenceservice.entities")
 @EnableJpaRepositories("net.cardosi.microservices.persistenceservice.repositories")
-//@PropertySource("persistence-server.properties", "classpath:db-config.properties")
 open class PersistenceConfiguration {
 
     protected var logger: Logger

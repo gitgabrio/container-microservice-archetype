@@ -20,8 +20,8 @@ class TimeConsumingControllerTest : AbstractTimeConsumingServiceTest() {
 
     @Autowired
     var timeConsumingController: TimeConsumingController? = null
-    val CONTENT_TYPE = "Content-Type"
-    val APPLICATION_JSON = "application/json"
+    val CONTENT_TYPE = "application/xml;charset=UTF-8"
+//    val APPLICATION_JSON = "application/json"
     private var mockMvc: MockMvc? = null
 
     /**
@@ -46,7 +46,7 @@ class TimeConsumingControllerTest : AbstractTimeConsumingServiceTest() {
     fun testAllDeferredUsersRESTCall() {
         val mvcResult = mockMvc?.perform(get("/deferredpersons"))?.andExpect(request().asyncStarted())?.andReturn()
         mvcResult?.asyncResult
-        mockMvc?.perform(asyncDispatch(mvcResult))?.andExpect(status().isOk)?.andExpect(content().contentType("application/xml;charset=UTF-8"))//?.andExpect(content().string(expectedResult))
+        mockMvc?.perform(asyncDispatch(mvcResult))?.andExpect(status().isOk)?.andExpect(content().contentType(CONTENT_TYPE))//?.andExpect(content().string(expectedResult))
 
     }
 }

@@ -17,9 +17,9 @@ class PersonsController
 
 
 /**
- * Create an instance plugging in the respository of Users.
+ * Create an instance plugging in the repository of Users.
 
- * @param personRepository An PsAors repository implementation.
+ * @param personRepository A repository implementation.
  */
 @Autowired
 constructor(val personRepository: PersonRepository) /*: AbstractEntityController<UserEntity, Int, PersonRepository>(personRepository) */ {
