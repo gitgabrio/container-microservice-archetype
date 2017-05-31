@@ -32,7 +32,7 @@ class TimeConsumingControllerTest : AbstractTimeConsumingServiceTest() {
         assertNotNull(timeConsumingController)
         mockMvc = MockMvcBuilders
                 .standaloneSetup(timeConsumingController)
-                .build();
+                .build()
     }
 
     @Test
