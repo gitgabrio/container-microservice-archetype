@@ -1,38 +1,33 @@
 package net.cardosi.microservices.timeconsumingservice.controllers
 
-import net.cardosi.microservices.timeconsumingservice.AbstractTimeConsumingServiceTest
+import net.cardosi.microservices.timeconsumingservice.AbstractTimeConsumingControllerTest
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.asyncDispatch
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.request
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 /**
  * Created by Gabriele Cardosi - gcardosi@cardosi.net on 29/05/17.
  */
-class TimeConsumingControllerTest : AbstractTimeConsumingServiceTest() {
+class TimeConsumingControllerTest : AbstractTimeConsumingControllerTest() {
 
     @Autowired
     var timeConsumingController: TimeConsumingController? = null
     val CONTENT_TYPE = "application/xml;charset=UTF-8"
 //    val APPLICATION_JSON = "application/json"
-    private var mockMvc: MockMvc? = null
+//    private var mockMvc: MockMvc? = null
 
     /**
      * Before class setup.
      */
     override fun beforeClassSetup() {
-        super.beforeClassSetup()
-        assertNotNull(timeConsumingController)
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(timeConsumingController)
-                .build()
+        super.beforeClassSetup(timeConsumingController!!)
+//        assertNotNull(timeConsumingController)
+//        mockMvc = MockMvcBuilders
+//                .standaloneSetup(timeConsumingController)
+//                .build()
     }
 
     @Test

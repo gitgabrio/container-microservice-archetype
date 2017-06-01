@@ -70,21 +70,39 @@
                 <finalName>actorserverservice-localhost-${project.version}</finalName>
             </properties>
         </profile>
+        <profile>
+            <id>jenkins</id>
+            <repositories>
+                <repository>
+                    <id>mate-releases</id>
+                    <url>
+                        https://nexus.mate.it/repository/maven-releases
+                    </url>
+                </repository>
+                <repository>
+                    <id>mate-snapshots</id>
+                    <url>
+                        https://nexus.mate.it/repository/maven-snapshots
+                    </url>
+                </repository>
+            </repositories>
+        </profile>
+
     </profiles>
     <build>
         <finalName>${finalName}</finalName>
         <!--<resources>-->
-            <!--<resource>-->
-                <!--<filtering>true</filtering>-->
-                <!--<directory>src/main/resources</directory>-->
-                <!--<includes>-->
-                    <!--<include>**/*.yml</include>-->
-                    <!--<include>**/*.sql</include>-->
-                    <!--<include>**/*.html</include>-->
-                    <!--<include>**/*.conf</include>-->
-                    <!--<include>**/*.properties</include>-->
-                <!--</includes>-->
-            <!--</resource>-->
+        <!--<resource>-->
+        <!--<filtering>true</filtering>-->
+        <!--<directory>src/main/resources</directory>-->
+        <!--<includes>-->
+        <!--<include>**/*.yml</include>-->
+        <!--<include>**/*.sql</include>-->
+        <!--<include>**/*.html</include>-->
+        <!--<include>**/*.conf</include>-->
+        <!--<include>**/*.properties</include>-->
+        <!--</includes>-->
+        <!--</resource>-->
         <!--</resources>-->
     </build>
 
