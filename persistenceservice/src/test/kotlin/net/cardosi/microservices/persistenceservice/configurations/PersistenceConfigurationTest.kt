@@ -12,7 +12,7 @@ import javax.sql.DataSource
 /**
  * Created by Gabriele Cardosi - gcardosi@cardosi.net on 29/05/17.
  */
-class PersistenceConfigurationTest : AbstractPersistenceServiceTest() {
+open class PersistenceConfigurationTest : AbstractPersistenceServiceTest() {
 
     @Autowired
     var dataSource: DataSource? = null
@@ -28,17 +28,17 @@ class PersistenceConfigurationTest : AbstractPersistenceServiceTest() {
 
 
     @Test
-    fun testDataSource() {
+    open fun testDataSource() {
         assertNotNull(dataSource)
     }
 
     @Test
-    fun testHomeController() {
+    open fun testHomeController() {
         assertNotNull(homeController)
     }
 
     @Test
-    fun testPersonsController() {
+    open fun testPersonsController() {
         assertNotNull(personsController)
     }
 
