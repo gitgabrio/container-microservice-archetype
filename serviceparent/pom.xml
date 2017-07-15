@@ -171,6 +171,16 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+
+
+            <!--<plugin>-->
+                <!--<artifactId>maven-failsafe-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<systemPropertyVariables>-->
+                        <!--<log.url>http://${docker.host.address}:${tomcat.port}/jolokia</log.url>-->
+                    <!--</systemPropertyVariables>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 </project>
