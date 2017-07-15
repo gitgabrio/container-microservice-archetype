@@ -52,7 +52,11 @@ error:
 # HTTP Server
 # HTTP (Tomcat) port
 server:
-  port: @eureka.port@
+  #port: @eureka.port@
+  port: ${RS_PORT_1111_TCP_PORT}
+
+  #DB_PORT_5432_TCP_PORT=5432
+ #  DB_PORT_5432_TCP_ADDR=172.17.0.5
 
 # Discovery Server Access
 #  1. DEV ONLY: Reduce the lease renewal interval to speed up registration
@@ -60,7 +64,8 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://@eureka.server@/eureka/
+      #defaultZone: http://@eureka.server@/eureka/
+      defaultZone: http://${RS_PORT_1111_TCP_ADDR}/eureka/
 # DO NOT DO THIS IN PRODUCTION
   instance:
     leaseRenewalIntervalInSeconds: 5

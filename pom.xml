@@ -118,7 +118,7 @@
                                 </assembly>
                                 <!-- Expose ports -->
                                 <ports>
-                                    <port>8080</port>
+                                    <port>1111</port>
                                 </ports>
                                 <!-- Default command for the build image -->
                                 <cmd>java -Djava.security.egd=file:/dev/./urandom -jar /maven/registrationservice.jar
@@ -131,14 +131,14 @@
                             <run>
                                 <!-- Assign dynamically mapped ports to maven variables (which can be reused in integration tests) -->
                                 <ports>
-                                    <port>tomcat.port:8080</port>
+                                    <port>1111:1111</port>
                                 </ports>
-                                <wait>
-                                    <!-- Check for this URL to return a 200 return code .... -->
-                                    <url>http://localhost:8080/access</url>
-                                    <!-- ... but at max 10 seconds -->
-                                    <time>10000</time>
-                                </wait>
+                                <!--<wait>-->
+                                    <!--&lt;!&ndash; Check for this URL to return a 200 return code .... &ndash;&gt;-->
+                                    <!--<url>http://${docker.host.address}:${tomcat.port}/access</url>-->
+                                    <!--&lt;!&ndash; ... but at max 10 seconds &ndash;&gt;-->
+                                    <!--<time>10000</time>-->
+                                <!--</wait>-->
                                 <!--<links>-->
                                 <!--&lt;!&ndash; Links can be referenced via alias (db) or name (postgres:9). If no link-alias (second "db")-->
                                 <!--is given it takes the first part (first "db") as link alias. So, <link>db</link> would be-->
@@ -152,58 +152,60 @@
                             </run>
                         </image>
 
-                        <!--&lt;!&ndash; Persistence service &ndash;&gt;-->
-                        <!--<image>-->
-                        <!--&lt;!&ndash; Alias name which can used for linking containers during runtime &ndash;&gt;-->
-                        <!--<alias>persistenceservice</alias>-->
-                        <!--<name>${docker.repo}/persistence-service:${project.version}</name>-->
+                        <!-- Persistence service -->
+                        <image>
+                            <!-- Alias name which can used for linking containers during runtime -->
+                            <alias>persistenceservice</alias>
+                            <name>${docker.repo}/persistence-service:${project.version}</name>
 
-                        <!--&lt;!&ndash; ....................................... &ndash;&gt;-->
-                        <!--&lt;!&ndash; Build configuration for creating images &ndash;&gt;-->
-                        <!--&lt;!&ndash; ....................................... &ndash;&gt;-->
-                        <!--<build>-->
-                        <!--<from>java:8u40</from>-->
-                        <!--&lt;!&ndash; Assembly descriptor holds the reference to the created artifact&ndash;&gt;-->
-                        <!--<assembly>-->
-                        <!--&lt;!&ndash; Normally, one would only use 'assembly.xml' if we could put the assembly descriptor-->
-                        <!--into src/main/docker But this confuses the alexec plugin, so we put it into another-->
-                        <!--directory and use an absolute pathe &ndash;&gt;-->
-                        <!--<descriptor>${basedir}/persistenceservice/src/main/fabric8/assembly.xml</descriptor>-->
-                        <!--</assembly>-->
-                        <!--&lt;!&ndash; Expose ports &ndash;&gt;-->
-                        <!--<ports>-->
-                        <!--<port>8080</port>-->
-                        <!--</ports>-->
-                        <!--&lt;!&ndash; Default command for the build image &ndash;&gt;-->
-                        <!--<cmd>java -Djava.security.egd=file:/dev/./urandom -jar /maven/persistenceservice.jar</cmd>-->
-                        <!--</build>-->
+                            <!-- ....................................... -->
+                            <!-- Build configuration for creating images -->
+                            <!-- ....................................... -->
+                            <build>
+                                <from>java:8u40</from>
+                                <!-- Assembly descriptor holds the reference to the created artifact-->
+                                <assembly>
+                                    <!-- Normally, one would only use 'assembly.xml' if we could put the assembly descriptor
+                                    into src/main/docker But this confuses the alexec plugin, so we put it into another
+                                    directory and use an absolute pathe -->
+                                    <descriptor>${basedir}/persistenceservice/src/main/fabric8/assembly.xml</descriptor>
+                                </assembly>
+                                <!-- Expose ports -->
+                                <ports>
+                                    <port>2222</port>
+                                </ports>
+                                <!-- Default command for the build image -->
+                                <cmd>java -Djava.security.egd=file:/dev/./urandom -jar /maven/persistenceservice.jar
+                                </cmd>
+                            </build>
 
-                        <!--&lt;!&ndash; ............................................................... &ndash;&gt;-->
-                        <!--&lt;!&ndash; Runtime configuration for starting/stopping/linking containers &ndash;&gt;-->
-                        <!--&lt;!&ndash; ............................................................... &ndash;&gt;-->
-                        <!--<run>-->
-                        <!--&lt;!&ndash; Assign dynamically mapped ports to maven variables (which can be reused in integration tests) &ndash;&gt;-->
-                        <!--<ports>-->
-                        <!--<port>tomcat.port:8080</port>-->
-                        <!--</ports>-->
-                        <!--<wait>-->
-                        <!--&lt;!&ndash; Check for this URL to return a 200 return code .... &ndash;&gt;-->
-                        <!--<url>http://${docker.host.address}:${tomcat.port}/access</url>-->
-                        <!--&lt;!&ndash; ... but at max 10 seconds &ndash;&gt;-->
-                        <!--<time>10000</time>-->
-                        <!--</wait>-->
-                        <!--<links>-->
-                        <!--&lt;!&ndash; Links can be referenced via alias (db) or name (postgres:9). If no link-alias (second "db")-->
-                        <!--is given it takes the first part (first "db") as link alias. So, <link>db</link> would be-->
-                        <!--enough here &ndash;&gt;-->
-                        <!--<link>registrationservice:registrationservice</link>-->
-                        <!--</links>-->
-                        <!--<log>-->
-                        <!--<prefix>TC</prefix>-->
-                        <!--<color>cyan</color>-->
-                        <!--</log>-->
-                        <!--</run>-->
-                        <!--</image>-->
+                            <!-- ............................................................... -->
+                            <!-- Runtime configuration for starting/stopping/linking containers -->
+                            <!-- ............................................................... -->
+                            <run>
+                                <!-- Assign dynamically mapped ports to maven variables (which can be reused in integration tests) -->
+                                <ports>
+                                    <port>2222:2222</port>
+                                </ports>
+                                <!--<wait>-->
+                                    <!--&lt;!&ndash; Check for this URL to return a 200 return code .... &ndash;&gt;-->
+                                    <!--<url>http://${docker.host.address}:1111/</url>-->
+                                    <!--&lt;!&ndash; ... but at max 10 seconds &ndash;&gt;-->
+                                    <!--<time>10000</time>-->
+                                <!--</wait>-->
+                                <links>
+                                    <!-- Links can be referenced via alias (db) or name (postgres:9). If no link-alias (second "db")
+                                    is given it takes the first part (first "db") as link alias. So, <link>db</link> would be
+                                    enough here -->
+                                    <!-- THIS SHOULD CREATE SOME RS_XXX variables -->
+                                    <link>registrationservice:rs</link>
+                                </links>
+                                <log>
+                                    <prefix>TC</prefix>
+                                    <color>cyan</color>
+                                </log>
+                            </run>
+                        </image>
                     </images>
                 </configuration>
 
