@@ -35,9 +35,9 @@
         <profile>
             <id>localhost</id>
             <properties>
-                <eureka.port>4444</eureka.port>
+                <eureka.port>3333</eureka.port>
                 <eureka.hostname>localhost</eureka.hostname>
-                <eureka.server>localhost:1111</eureka.server>
+                <eureka.server>172.17.0.2:1111</eureka.server>
                 <finalName>configurationservice-localhost-${project.version}</finalName>
             </properties>
         </profile>

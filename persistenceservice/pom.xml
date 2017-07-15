@@ -31,7 +31,7 @@
 			<properties>
 				<eureka.port>2222</eureka.port>
 				<eureka.hostname>localhost</eureka.hostname>
-				<eureka.server>localhost:1111</eureka.server>
+				<eureka.server>172.17.0.2:1111</eureka.server>
 				<finalName>persistenceservice-localhost-${project.version}</finalName>
 			</properties>
 		</profile>

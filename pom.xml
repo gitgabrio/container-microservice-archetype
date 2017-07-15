@@ -4,9 +4,9 @@
     <!--<groupId>net.cardosi.microservices</groupId>-->
     <artifactId>container-microservice</artifactId>
     <version>0.1-SNAPSHOT</version>
-    <modules>
-        <module>actorclientservice</module>
-    </modules>
+    <!--<modules>-->
+    <!--<module>actorclientservice</module>-->
+    <!--</modules>-->
     <packaging>pom</packaging>
 
     <parent>
@@ -53,32 +53,7 @@
             <version>0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
-    <!--<packaging>jar</packaging>-->
 
-    <!--<parent>-->
-    <!--<groupId>net.cardosi.microservices</groupId>-->
-    <!--<artifactId>serviceparent</artifactId>-->
-    <!--<version>0.1-SNAPSHOT</version>-->
-    <!--</parent>-->
-    <!--<modules>-->
-    <!--<module>registrationservice</module>-->
-    <!--<module>asteriskservice</module>-->
-    <!--<module>configurationservice</module>-->
-    <!--<module>persistenceservice</module>-->
-    <!--&lt;!&ndash;<module>recognitionservice</module>&ndash;&gt;-->
-    <!--</modules>-->
-
-    <!--<build>-->
-    <!--<plugins>-->
-    <!--<plugin>-->
-    <!--<groupId>org.springframework.boot</groupId>-->
-    <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-    <!--<configuration>-->
-    <!--<skip>true</skip>-->
-    <!--</configuration>-->
-    <!--</plugin>-->
-    <!--</plugins>-->
-    <!--</build>-->
 
     <!--<properties>-->
     <!--&lt;!&ndash; Stand-alone RESTFul application for testing only &ndash;&gt;-->
@@ -134,10 +109,10 @@
                                     <port>1111:1111</port>
                                 </ports>
                                 <!--<wait>-->
-                                    <!--&lt;!&ndash; Check for this URL to return a 200 return code .... &ndash;&gt;-->
-                                    <!--<url>http://${docker.host.address}:${tomcat.port}/access</url>-->
-                                    <!--&lt;!&ndash; ... but at max 10 seconds &ndash;&gt;-->
-                                    <!--<time>10000</time>-->
+                                <!--&lt;!&ndash; Check for this URL to return a 200 return code .... &ndash;&gt;-->
+                                <!--<url>http://${docker.host.address}:${tomcat.port}/access</url>-->
+                                <!--&lt;!&ndash; ... but at max 10 seconds &ndash;&gt;-->
+                                <!--<time>10000</time>-->
                                 <!--</wait>-->
                                 <!--<links>-->
                                 <!--&lt;!&ndash; Links can be referenced via alias (db) or name (postgres:9). If no link-alias (second "db")-->
@@ -188,17 +163,84 @@
                                     <port>2222:2222</port>
                                 </ports>
                                 <!--<wait>-->
-                                    <!--&lt;!&ndash; Check for this URL to return a 200 return code .... &ndash;&gt;-->
-                                    <!--<url>http://${docker.host.address}:1111/</url>-->
-                                    <!--&lt;!&ndash; ... but at max 10 seconds &ndash;&gt;-->
-                                    <!--<time>10000</time>-->
+                                <!--&lt;!&ndash; Check for this URL to return a 200 return code .... &ndash;&gt;-->
+                                <!--<url>http://${docker.host.address}:1111/</url>-->
+                                <!--&lt;!&ndash; ... but at max 10 seconds &ndash;&gt;-->
+                                <!--<time>10000</time>-->
                                 <!--</wait>-->
+                                <dependsOn>
+                                    <container>
+                                        registrationservice
+                                    </container>
+                                </dependsOn>
                                 <links>
                                     <!-- Links can be referenced via alias (db) or name (postgres:9). If no link-alias (second "db")
                                     is given it takes the first part (first "db") as link alias. So, <link>db</link> would be
                                     enough here -->
                                     <!-- THIS SHOULD CREATE SOME RS_XXX variables -->
                                     <link>registrationservice:rs</link>
+                                </links>
+                                <log>
+                                    <prefix>TC</prefix>
+                                    <color>cyan</color>
+                                </log>
+                            </run>
+                        </image>
+                        <!-- Configuration service -->
+                        <image>
+                            <!-- Alias name which can used for linking containers during runtime -->
+                            <alias>configurationservice</alias>
+                            <name>${docker.repo}/configuration-service:${project.version}</name>
+
+                            <!-- ....................................... -->
+                            <!-- Build configuration for creating images -->
+                            <!-- ....................................... -->
+                            <build>
+                                <from>java:8u40</from>
+                                <!-- Assembly descriptor holds the reference to the created artifact-->
+                                <assembly>
+                                    <!-- Normally, one would only use 'assembly.xml' if we could put the assembly descriptor
+                                    into src/main/docker But this confuses the alexec plugin, so we put it into another
+                                    directory and use an absolute pathe -->
+                                    <descriptor>${basedir}/configurationservice/src/main/fabric8/assembly.xml</descriptor>
+                                </assembly>
+                                <!-- Expose ports -->
+                                <ports>
+                                    <port>3333</port>
+                                </ports>
+                                <!-- Default command for the build image -->
+                                <cmd>java -Djava.security.egd=file:/dev/./urandom -jar /maven/configurationservice.jar
+                                </cmd>
+                            </build>
+
+                            <!-- ............................................................... -->
+                            <!-- Runtime configuration for starting/stopping/linking containers -->
+                            <!-- ............................................................... -->
+                            <run>
+                                <!-- Assign dynamically mapped ports to maven variables (which can be reused in integration tests) -->
+                                <ports>
+                                    <port>3333:3333</port>
+                                </ports>
+                                <!--<wait>-->
+                                <!--&lt;!&ndash; Check for this URL to return a 200 return code .... &ndash;&gt;-->
+                                <!--<url>http://${docker.host.address}:1111/</url>-->
+                                <!--&lt;!&ndash; ... but at max 10 seconds &ndash;&gt;-->
+                                <!--<time>10000</time>-->
+                                <!--</wait>-->
+                                <dependsOn>
+                                    <container>
+                                        registrationservice
+                                    </container>
+                                    <container>
+                                        persistenceservice
+                                    </container>
+                                </dependsOn>
+                                <links>
+                                    <!-- Links can be referenced via alias (db) or name (postgres:9). If no link-alias (second "db")
+                                    is given it takes the first part (first "db") as link alias. So, <link>db</link> would be
+                                    enough here -->
+                                    <!-- THIS SHOULD CREATE SOME RS_XXX, PS_XXX variables -->
+                                    <link>registrationservice:rs, persistenceservice:ps</link>
                                 </links>
                                 <log>
                                     <prefix>TC</prefix>

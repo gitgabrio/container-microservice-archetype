@@ -15,7 +15,7 @@ error:
 
 # HTTP Server
 server:
-  port: @eureka.port@   # HTTP (Tomcat) port
+  port: 3333   # HTTP (Tomcat) port
   connection-timeout: -1
 
 
@@ -25,7 +25,8 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://@eureka.server@/eureka/
+     # defaultZone: http://@eureka.server@/eureka/
+      defaultZone: http://${RS_PORT_1111_TCP_ADDR}:${RS_PORT_1111_TCP_PORT}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
 
