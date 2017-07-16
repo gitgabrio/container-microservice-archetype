@@ -16,18 +16,12 @@ class TimeConsumingControllerTest : AbstractTimeConsumingControllerTest() {
     @Autowired
     var timeConsumingController: TimeConsumingController? = null
     val CONTENT_TYPE = "application/xml;charset=UTF-8"
-//    val APPLICATION_JSON = "application/json"
-//    private var mockMvc: MockMvc? = null
 
     /**
      * Before class setup.
      */
     override fun beforeClassSetup() {
         super.beforeClassSetup(timeConsumingController!!)
-//        assertNotNull(timeConsumingController)
-//        mockMvc = MockMvcBuilders
-//                .standaloneSetup(timeConsumingController)
-//                .build()
     }
 
     @Test

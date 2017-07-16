@@ -36,17 +36,17 @@
             <version>2.4.2</version>
         </dependency>
     </dependencies>
-    <profiles>
-        <profile>
-            <id>localhost</id>
-            <properties>
-                <eureka.port>5555</eureka.port>
-                <eureka.hostname>localhost</eureka.hostname>
-                <eureka.server>localhost:1111</eureka.server>
-                <finalName>actorclientservice-localhost-${project.version}</finalName>
-            </properties>
-        </profile>
-    </profiles>
+    <!--<profiles>-->
+        <!--<profile>-->
+            <!--<id>localhost</id>-->
+            <!--<properties>-->
+                <!--<eureka.port>5555</eureka.port>-->
+                <!--<eureka.hostname>localhost</eureka.hostname>-->
+                <!--<eureka.server>localhost:1111</eureka.server>-->
+                <!--<finalName>actorclientservice-localhost-${project.version}</finalName>-->
+            <!--</properties>-->
+        <!--</profile>-->
+    <!--</profiles>-->
     <build>
         <finalName>${finalName}</finalName>
         <resources>

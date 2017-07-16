@@ -18,24 +18,18 @@
 		<start-class>net.cardosi.microservices.persistenceservice.PersistenceServer</start-class>
 		<!--<hsqldb.version>2.4.0</hsqldb.version>-->
 	</properties>
-	<!--<dependencies>-->
-		<!--<dependency>-->
-			<!--<groupId>org.hsqldb</groupId>-->
-			<!--<artifactId>hsqldb</artifactId>-->
-			<!--&lt;!&ndash;<version>${hsqldb.version}</version>&ndash;&gt;-->
-		<!--</dependency>-->
-	<!--</dependencies>-->
-	<profiles>
-		<profile>
-			<id>localhost</id>
-			<properties>
-				<eureka.port>2222</eureka.port>
-				<eureka.hostname>localhost</eureka.hostname>
-				<eureka.server>172.17.0.2:1111</eureka.server>
-				<finalName>persistenceservice-localhost-${project.version}</finalName>
-			</properties>
-		</profile>
-	</profiles>
+
+	<!--<profiles>-->
+		<!--<profile>-->
+			<!--<id>localhost</id>-->
+			<!--<properties>-->
+				<!--<eureka.port>2222</eureka.port>-->
+				<!--<eureka.hostname>localhost</eureka.hostname>-->
+				<!--<eureka.server>172.17.0.2:1111</eureka.server>-->
+				<!--<finalName>persistenceservice-localhost-${project.version}</finalName>-->
+			<!--</properties>-->
+		<!--</profile>-->
+	<!--</profiles>-->
 
 
 </project>

@@ -16,21 +16,21 @@
     <properties>
         <!-- Stand-alone RESTFul application for testing only -->
         <start-class>net.cardosi.microservices.registrationservice.RegistrationServer</start-class>
-        <eureka.port>1111</eureka.port>
-        <eureka.hostname>localhost</eureka.hostname>
+        <!--<eureka.port>1111</eureka.port>-->
+        <!--<eureka.hostname>localhost</eureka.hostname>-->
         <finalName>registrationservice-${project.version}</finalName>
     </properties>
 
-    <profiles>
-        <profile>
-            <id>localhost</id>
-            <properties>
-                <eureka.port>1111</eureka.port>
-                <eureka.hostname>localhost</eureka.hostname>
-                <finalName>registrationservice-sweetpenguin-${project.version}</finalName>
-            </properties>
-        </profile>
-    </profiles>
+    <!--<profiles>-->
+        <!--<profile>-->
+            <!--<id>localhost</id>-->
+            <!--<properties>-->
+                <!--<eureka.port>1111</eureka.port>-->
+                <!--<eureka.hostname>localhost</eureka.hostname>-->
+                <!--<finalName>registrationservice-sweetpenguin-${project.version}</finalName>-->
+            <!--</properties>-->
+        <!--</profile>-->
+    <!--</profiles>-->
     <build>
         <finalName>${finalName}</finalName>
     </build>

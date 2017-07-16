@@ -1,6 +1,6 @@
 package net.cardosi.microservices.timeconsumingservice.services
 
-import net.cardosi.microservices.persistenceservice.entities.UserEntity
+import net.cardosi.microservices.dto.UserDTO
 import net.cardosi.microservices.timeconsumingservice.AbstractTimeConsumingServiceTest
 import org.junit.Test
 
@@ -15,10 +15,6 @@ class TimeConsumingServiceTest : AbstractTimeConsumingServiceTest() {
     @Autowired
     var timeConsumingService: TimeConsumingService? = null
 
-//    @Override
-//    override fun beforeClassSetup() : void {
-//
-//    }
 
     /**
      * Before class setup.
@@ -30,7 +26,7 @@ class TimeConsumingServiceTest : AbstractTimeConsumingServiceTest() {
 
     @Test
     fun testFindAll() {
-        val retrieved : List<UserEntity>?  = timeConsumingService?.findAll()
+        val retrieved : List<UserDTO>?  = timeConsumingService?.findAll()
         assertNotNull(retrieved)
         assertFalse(retrieved?.isEmpty()!!)
     }

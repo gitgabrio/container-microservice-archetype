@@ -1,8 +1,8 @@
 # Configure this Discovery Server
 eureka:
   instance:
-    virtual-host-name: 172.17.0.2
-    hostname: 172.17.0.2
+
+    hostname: ${CONTAINER_IP}
     #enableSelfPreservation: false
     preferIpAddress: true
     # DO NOT DO THIS IN PRODUCTION
@@ -11,11 +11,9 @@ eureka:
   client:
     registerWithEureka: false
     fetchRegistry: false
-    #register-with-eureka: false
-    #fetch-registry: false
 
 server:
-  port: 1111
+  port: ${SERVICE_PORT}
 
 # Discovery Server Dashboard uses FreeMarker.  Don't want Thymeleaf templates
 spring:

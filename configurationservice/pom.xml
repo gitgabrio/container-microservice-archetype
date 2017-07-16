@@ -19,29 +19,17 @@
         <finalName>configurationservice-${version}</finalName>
     </properties>
 
-    <!--<dependencies>-->
-        <!--<dependency>-->
-            <!--<groupId>net.cardosi.microservices</groupId>-->
-            <!--<artifactId>persistenceservice</artifactId>-->
-            <!--<version>0.1-SNAPSHOT</version>-->
-        <!--</dependency>-->
-        <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
-            <!--&lt;!&ndash;<groupId>net.cardosi.microservices</groupId>&ndash;&gt;-->
-            <!--&lt;!&ndash;<artifactId>servicecommon</artifactId>&ndash;&gt;-->
-            <!--&lt;!&ndash;<version>0.1-SNAPSHOT</version>&ndash;&gt;-->
-        <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
-    <!--</dependencies>-->
-    <profiles>
-        <profile>
-            <id>localhost</id>
-            <properties>
-                <eureka.port>3333</eureka.port>
-                <eureka.hostname>localhost</eureka.hostname>
-                <eureka.server>172.17.0.2:1111</eureka.server>
-                <finalName>configurationservice-localhost-${project.version}</finalName>
-            </properties>
-        </profile>
-    </profiles>
+    <!--<profiles>-->
+        <!--<profile>-->
+            <!--<id>localhost</id>-->
+            <!--<properties>-->
+                <!--<eureka.port>3333</eureka.port>-->
+                <!--<eureka.hostname>localhost</eureka.hostname>-->
+                <!--<eureka.server>172.17.0.2:1111</eureka.server>-->
+                <!--<finalName>configurationservice-localhost-${project.version}</finalName>-->
+            <!--</properties>-->
+        <!--</profile>-->
+    <!--</profiles>-->
     <build>
         <finalName>${finalName}</finalName>
     </build>

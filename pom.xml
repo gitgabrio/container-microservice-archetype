@@ -4,9 +4,14 @@
     <!--<groupId>net.cardosi.microservices</groupId>-->
     <artifactId>container-microservice</artifactId>
     <version>0.1-SNAPSHOT</version>
-    <!--<modules>-->
-    <!--<module>actorclientservice</module>-->
-    <!--</modules>-->
+    <modules>
+        <module>registrationservice</module>
+        <module>persistenceservice</module>
+        <module>timeconsumingservice</module>
+        <module>configurationservice</module>
+        <module>actorserverservice</module>
+        <module>actorclientservice</module>
+    </modules>
     <packaging>pom</packaging>
 
     <parent>
@@ -19,6 +24,14 @@
     <properties>
         <docker.maven.plugin.fabric8.version>0.21.0</docker.maven.plugin.fabric8.version>
         <docker.repo>gabriolo68</docker.repo>
+        <!-- services properties -->
+        <registration.service.port>1111</registration.service.port>
+        <persistence.service.port>2222</persistence.service.port>
+        <timeconsuming.service.port>3333</timeconsuming.service.port>
+        <configuration.service.port>4444</configuration.service.port>
+        <actorserver.service.port>5555</actorserver.service.port>
+        <actorserver.service.akka.port>12552</actorserver.service.akka.port>
+        <actorclient.service.port>6666</actorclient.service.port>
     </properties>
 
     <dependencies>
@@ -71,7 +84,6 @@
                     <logDate>default</logDate>
                     <autoPull>true</autoPull>
                     <images>
-
                         <!-- Registration service -->
                         <image>
                             <!-- Alias name which can used for linking containers during runtime -->
@@ -93,7 +105,7 @@
                                 </assembly>
                                 <!-- Expose ports -->
                                 <ports>
-                                    <port>1111</port>
+                                    <port>${registration.service.port}</port>
                                 </ports>
                                 <!-- Default command for the build image -->
                                 <cmd>java -Djava.security.egd=file:/dev/./urandom -jar /maven/registrationservice.jar
@@ -106,20 +118,18 @@
                             <run>
                                 <!-- Assign dynamically mapped ports to maven variables (which can be reused in integration tests) -->
                                 <ports>
-                                    <port>1111:1111</port>
+                                    <port>${registration.service.port}:${registration.service.port}</port>
                                 </ports>
-                                <!--<wait>-->
-                                <!--&lt;!&ndash; Check for this URL to return a 200 return code .... &ndash;&gt;-->
-                                <!--<url>http://${docker.host.address}:${tomcat.port}/access</url>-->
-                                <!--&lt;!&ndash; ... but at max 10 seconds &ndash;&gt;-->
-                                <!--<time>10000</time>-->
-                                <!--</wait>-->
-                                <!--<links>-->
-                                <!--&lt;!&ndash; Links can be referenced via alias (db) or name (postgres:9). If no link-alias (second "db")-->
-                                <!--is given it takes the first part (first "db") as link alias. So, <link>db</link> would be-->
-                                <!--enough here &ndash;&gt;-->
-                                <!--<link>db:db</link>-->
-                                <!--</links>-->
+                                <env>
+                                    <SERVICE_PORT>${registration.service.port}</SERVICE_PORT>
+                                    <CONTAINER_IP>${docker.container.registrationservice.ip}</CONTAINER_IP>
+                                </env>
+                                <wait>
+                                    <!-- Check for this URL to return a 200 return code .... -->
+                                    <url>http://${docker.host.address}:${registration.service.port}/</url>
+                                    <!-- ... but at max 10 seconds -->
+                                    <time>20000</time>
+                                </wait>
                                 <log>
                                     <prefix>TC</prefix>
                                     <color>cyan</color>
@@ -147,7 +157,7 @@
                                 </assembly>
                                 <!-- Expose ports -->
                                 <ports>
-                                    <port>2222</port>
+                                    <port>${persistence.service.port}</port>
                                 </ports>
                                 <!-- Default command for the build image -->
                                 <cmd>java -Djava.security.egd=file:/dev/./urandom -jar /maven/persistenceservice.jar
@@ -160,14 +170,17 @@
                             <run>
                                 <!-- Assign dynamically mapped ports to maven variables (which can be reused in integration tests) -->
                                 <ports>
-                                    <port>2222:2222</port>
+                                    <port>${persistence.service.port}:${persistence.service.port}</port>
                                 </ports>
-                                <!--<wait>-->
-                                <!--&lt;!&ndash; Check for this URL to return a 200 return code .... &ndash;&gt;-->
-                                <!--<url>http://${docker.host.address}:1111/</url>-->
-                                <!--&lt;!&ndash; ... but at max 10 seconds &ndash;&gt;-->
-                                <!--<time>10000</time>-->
-                                <!--</wait>-->
+                                <env>
+                                    <SERVICE_PORT>${persistence.service.port}</SERVICE_PORT>
+                                </env>
+                                <wait>
+                                    <!-- Check for this URL to return a 200 return code .... -->
+                                    <url>http://${docker.host.address}:${persistence.service.port}/</url>
+                                    <!-- ... but at max 10 seconds -->
+                                    <time>20000</time>
+                                </wait>
                                 <dependsOn>
                                     <container>
                                         registrationservice
@@ -202,15 +215,17 @@
                                     <!-- Normally, one would only use 'assembly.xml' if we could put the assembly descriptor
                                     into src/main/docker But this confuses the alexec plugin, so we put it into another
                                     directory and use an absolute pathe -->
-                                    <descriptor>${basedir}/configurationservice/src/main/fabric8/assembly.xml</descriptor>
+                                    <descriptor>${basedir}/configurationservice/src/main/fabric8/assembly.xml
+                                    </descriptor>
                                 </assembly>
                                 <!-- Expose ports -->
                                 <ports>
-                                    <port>3333</port>
+                                    <port>${configuration.service.port}</port>
                                 </ports>
                                 <!-- Default command for the build image -->
                                 <cmd>java -Djava.security.egd=file:/dev/./urandom -jar /maven/configurationservice.jar
                                 </cmd>
+
                             </build>
 
                             <!-- ............................................................... -->
@@ -219,14 +234,17 @@
                             <run>
                                 <!-- Assign dynamically mapped ports to maven variables (which can be reused in integration tests) -->
                                 <ports>
-                                    <port>3333:3333</port>
+                                    <port>${configuration.service.port}:${configuration.service.port}</port>
                                 </ports>
-                                <!--<wait>-->
-                                <!--&lt;!&ndash; Check for this URL to return a 200 return code .... &ndash;&gt;-->
-                                <!--<url>http://${docker.host.address}:1111/</url>-->
-                                <!--&lt;!&ndash; ... but at max 10 seconds &ndash;&gt;-->
-                                <!--<time>10000</time>-->
-                                <!--</wait>-->
+                                <env>
+                                    <SERVICE_PORT>${configuration.service.port}</SERVICE_PORT>
+                                </env>
+                                <wait>
+                                    <!-- Check for this URL to return a 200 return code .... -->
+                                    <url>http://${docker.host.address}:${configuration.service.port}/</url>
+                                    <!-- ... but at max 10 seconds -->
+                                    <time>20000</time>
+                                </wait>
                                 <dependsOn>
                                     <container>
                                         registrationservice

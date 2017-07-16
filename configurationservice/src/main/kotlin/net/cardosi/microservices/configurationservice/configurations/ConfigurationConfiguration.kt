@@ -71,8 +71,4 @@ open class ConfigurationConfiguration {
         return HomeController()
     }
 
-//    @Bean
-//    open fun callRegistry(): MutableMap<String, String> {
-//        return hashMapOf<String, String>()
-//    }
 }

@@ -20,28 +20,28 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>net.cardosi.microservices</groupId>
-            <artifactId>persistenceservice</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>net.cardosi.microservices</groupId>-->
+            <!--<artifactId>persistenceservice</artifactId>-->
+            <!--<version>0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>net.cardosi.microservices</groupId>
             <artifactId>servicecommon</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
-    <profiles>
-        <profile>
-            <id>localhost</id>
-            <properties>
-                <eureka.port>3333</eureka.port>
-                <eureka.hostname>localhost</eureka.hostname>
-                <eureka.server>localhost:1111</eureka.server>
-                <finalName>timeconsumingservice-localhost-${version}</finalName>
-            </properties>
-        </profile>
-    </profiles>
+    <!--<profiles>-->
+        <!--<profile>-->
+            <!--<id>localhost</id>-->
+            <!--<properties>-->
+                <!--<eureka.port>3333</eureka.port>-->
+                <!--<eureka.hostname>localhost</eureka.hostname>-->
+                <!--<eureka.server>localhost:1111</eureka.server>-->
+                <!--<finalName>timeconsumingservice-localhost-${version}</finalName>-->
+            <!--</properties>-->
+        <!--</profile>-->
+    <!--</profiles>-->
     <build>
         <finalName>${finalName}</finalName>
     </build>

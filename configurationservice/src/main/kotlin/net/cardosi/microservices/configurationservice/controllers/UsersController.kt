@@ -45,31 +45,6 @@ class UsersController(
         return "users"
     }
 
-//    @RequestMapping("/usersasync")
-//    fun allAsyncUsers(model: Model): String {
-//        logger.info("web-service allUsers() invoked")
-//        val users = usersService.findAsyncAll()
-//        logger.info("web-service allUsers() found: " + users!!)
-//        model.addAttribute("users", users)
-//        return "users"
-//    }
-//
-//    @RequestMapping("/usersdeferred")
-//    fun allDeferredUsers(model: Model): String {
-//        logger.info("web-service allDeferredUsers() invoked")
-//        val deferredResult = usersService.findDeferredAll()
-//        deferredResult.onCompletion {
-//            if (deferredResult.hasResult()) {
-//                val users = deferredResult.result
-//                logger.info("web-service allDeferredUsers() found: " + users!!)
-//                model.addAttribute("users", users)
-//            } else {
-//                logger.info("web-service allDeferredUsers() did not find users")
-//            }
-//        }
-//        return "users"
-//    }
-
     @RequestMapping("/users/{userNumber}")
     fun byNumber(model: Model,
                  @PathVariable("userNumber") userNumber: Integer): String {

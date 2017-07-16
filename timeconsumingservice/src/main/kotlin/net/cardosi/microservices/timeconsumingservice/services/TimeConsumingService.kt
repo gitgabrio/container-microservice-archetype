@@ -2,7 +2,7 @@
 
 package net.cardosi.microservices.timeconsumingservice.services
 
-import net.cardosi.microservices.persistenceservice.entities.UserEntity
+import net.cardosi.microservices.dto.UserDTO
 import org.springframework.stereotype.Service
 import java.lang.Exception
 import java.lang.StringBuilder
@@ -22,11 +22,11 @@ class TimeConsumingService {
 
 
     @Throws(Exception::class)
-    fun findAll(): List<UserEntity>? {
+    fun findAll(): List<UserDTO>? {
         logger.info("findAll() invoked")
-        val toReturn: ArrayList<UserEntity> = ArrayList()
+        val toReturn: ArrayList<UserDTO> = ArrayList()
         repeat(5) { i ->
-            val toAdd: UserEntity = createUserEntity(i)
+            val toAdd: UserDTO = createUserEntity(i)
             toReturn.add(toAdd)
             try {
                 Thread.sleep(1000)
@@ -38,8 +38,8 @@ class TimeConsumingService {
 
     }
 
-    private fun createUserEntity(id: Int): UserEntity {
-        val toReturn = UserEntity()
+    private fun createUserEntity(id: Int): UserDTO {
+        val toReturn = UserDTO()
         toReturn.id = id
         toReturn.name = getSaltString (Random().nextInt(7) + 3)
         toReturn.surname = getSaltString(Random().nextInt(7) + 3)

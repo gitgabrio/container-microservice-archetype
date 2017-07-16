@@ -12,4 +12,6 @@
             <outputFileNameMapping>registrationservice.jar</outputFileNameMapping>
         </dependencySet>
     </dependencySets>
+
+
 </assembly>

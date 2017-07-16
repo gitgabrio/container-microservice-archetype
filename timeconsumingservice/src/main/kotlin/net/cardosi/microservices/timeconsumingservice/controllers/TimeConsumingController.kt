@@ -2,7 +2,7 @@
 
 package net.cardosi.microservices.timeconsumingservice.controllers
 
-import net.cardosi.microservices.persistenceservice.entities.UserEntity
+import net.cardosi.microservices.dto.UserDTO
 import net.cardosi.microservices.timeconsumingservice.services.TimeConsumingService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Async
@@ -38,9 +38,9 @@ class TimeConsumingController(
      */
     @RequestMapping("/deferredpersons")
     @Async // This means it will run on a different thread
-    fun allDeferredUsers(): DeferredResult<List<UserEntity>?> {
+    fun allDeferredUsers(): DeferredResult<List<UserDTO>?> {
         logger.info("web-service allDeferredUsers() invoked")
-        val toReturn: DeferredResult<List<UserEntity>?> = DeferredResult()
+        val toReturn: DeferredResult<List<UserDTO>?> = DeferredResult()
         Thread({
             val users = timeConsumingService.findAll()
             logger.info("web-service allDeferredUsers() found: " + users!!)
