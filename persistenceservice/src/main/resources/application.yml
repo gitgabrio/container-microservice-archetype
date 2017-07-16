@@ -1,8 +1,5 @@
 # Spring properties
-  # Service registers under this name
 spring:
-  application:
-      name: persistence-service
   # Ignore Eureka dashboard FreeMarker templates
   freemarker:
       enabled: false
@@ -66,9 +63,11 @@ eureka:
     serviceUrl:
       #defaultZone: http://@eureka.server@/eureka/
       defaultZone: http://${RS_PORT_1111_TCP_ADDR}:${RS_PORT_1111_TCP_PORT}/eureka/
-# DO NOT DO THIS IN PRODUCTION
   instance:
+    preferIpAddress: true
+    # DO NOT DO THIS IN PRODUCTION
     leaseRenewalIntervalInSeconds: 5
+
 
 #Test db
 testDatasource:
@@ -77,3 +76,9 @@ testDatasource:
   password:
   driverClassName: org.hsqldb.jdbcDriver
 
+security:
+  basic:
+    enabled: false
+management:
+  security:
+    enabled: false

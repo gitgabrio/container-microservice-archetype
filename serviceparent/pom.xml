@@ -102,6 +102,7 @@
                 <filtering>true</filtering>
                 <directory>src/main/resources</directory>
                 <includes>
+                    <include>**/*.xml</include>
                     <include>**/*.yml</include>
                     <include>**/*.sql</include>
                     <include>**/*.html</include>

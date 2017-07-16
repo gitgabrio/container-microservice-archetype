@@ -18,7 +18,6 @@ import org.springframework.web.client.RestTemplate
  */
 @Configuration
 @ComponentScan("net.cardosi.microservices.configurationservice")
-//@PropertySource("configuration-server.properties")
 open class ConfigurationConfiguration {
 
     @Value("\${persistenceservice.url}")

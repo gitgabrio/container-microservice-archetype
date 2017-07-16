@@ -3,7 +3,17 @@ package net.cardosi.microservices.dto
 /**
  * Created by Gabriele Cardosi - gcardosi@cardosi.net on 27/05/17.
  */
-data class UserDTO(val id: Int?, val name : String, val surname : String) : InterfaceDTO {
+class UserDTO() : InterfaceDTO {
+
+    var id: Int? = 0
+    var name : String = ""
+    var surname : String = ""
+
+    constructor(id: Int?,  name : String,  surname : String) : this() {
+        this.id = id
+        this.name = name
+        this.surname = surname
+    }
 
     override fun toString(): String{
         return "UserDTO(id=$id, name='$name', surname='$surname')"

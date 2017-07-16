@@ -1,7 +1,5 @@
 # Spring properties
 spring:
-  application:
-     name: configuration-service  # Service registers under this name
   freemarker:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
   thymeleaf:
@@ -28,8 +26,19 @@ eureka:
      # defaultZone: http://@eureka.server@/eureka/
       defaultZone: http://${RS_PORT_1111_TCP_ADDR}:${RS_PORT_1111_TCP_PORT}/eureka/
   instance:
-    leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
+    preferIpAddress: true
+    # DO NOT DO THIS IN PRODUCTION
+    leaseRenewalIntervalInSeconds: 5
 
-persistenceservice.url: http://PERSISTENCE-SERVICE
-timeconsumingservice.url: http://TIMECONSUMING-SERVICE
+persistenceservice:
+  url: http://PERSISTENCE-SERVICE
+timeconsumingservice:
+  url: http://TIMECONSUMING-SERVICE
+
+security:
+  basic:
+    enabled: false
+management:
+  security:
+    enabled: false
 
