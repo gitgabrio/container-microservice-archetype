@@ -31,7 +31,7 @@
         <configuration.service.port>4444</configuration.service.port>
         <actorserver.service.port>5555</actorserver.service.port>
         <actorserver.service.akka.port>12552</actorserver.service.akka.port>
-        <actorclient.service.port>6666</actorclient.service.port>
+        <actorclient.service.akka.port>6666</actorclient.service.akka.port>
     </properties>
 
     <dependencies>
